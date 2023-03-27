@@ -1,0 +1,508 @@
+<style>
+  .modal-content {width: 909px;}
+  #bd-example-modal-lg{ padding-left: 0px; padding-right: 195px;}
+  #editbd-example-modal-lg{ padding-left: 0px; padding-right: 195px;}
+  textarea.form-control{height: calc(1.5em + 1.25rem + 5px);}
+</style>
+  <!-- Main content -->
+<!-- <div class="main-content" id="panel"> -->
+   
+    <!-- Header -->
+  <div class="header bg-primary pb-6">
+    <div class="container-fluid">
+      <div class="header-body">
+        <div class="row align-items-center py-4">
+          <div class="col-lg-6 col-7">
+            <h6 class="h2 text-white d-inline-block mb-0"><?= $this->escape($this->pageheader); ?></h6>
+            <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                  <li class="breadcrumb-item"><a href="<?= $this->url(array('module' => 'default', 'controller' => 'dashbord'), null, true); ?>"><i class="fas fa-home"></i></a></li>
+                  <li class="breadcrumb-item"><a href="#"></a></li>
+                  <!-- <li class="breadcrumb-item active" aria-current="page">Default</li> -->
+                </ol>
+              </nav>
+          </div>
+          <div class="col-lg-6 col-5 text-right">
+          <button type="button" class="btn btn-sm btn-neutral" data-toggle="modal" data-target="#bd-example-modal-lg">User Access</button>
+        
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    <!-- Header -->
+
+      <!-- Page content -->
+  <div class="container-fluid mt--6">
+      <!-- Add Employee Form Model -->
+    <div class="modal fade" id="bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="card mb-4">
+              <!-- Card header -->
+            <div class="card-header">
+                <h3 class="mb-0">User Access Form</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div><!-- Card header -->
+              
+              <!-- Card body -->
+            <div class="card-body">
+                <!-- Add Employee Form groups used in grid -->
+              <form id="Form" class="needs-validation" novalidate>
+
+                <div class="form-row">
+
+                      <div class="col-md-3 mb-3">
+                        <label class="form-control-label" for="exampleFormControlSelect1">User Name</label>
+                        <select class="form-control" name="name" id="empname" required>
+                        <option value="" >Select User Name</option>
+                        <?php foreach ($this->uname as $res) { ?>
+                          <option value="<?=$this->escape($res['emp_name']);?>" ><?=$this->escape($res['emp_name']);?></option>
+                          <?php } ?>
+                        </select>
+                      </div>                   
+
+                    <div class="col-md-3 mb-3">
+                        <label class="form-control-label" for="validationCustom03">Email</label>
+                        <input type="email" name="email" class="form-control" id="validationCustom03" placeholder="Enter Email" required readonly>
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                      <label class="form-control-label" for="validationCustom05">Mobile No </label>
+                      <input type="text" name="mobileNo" class="form-control" id="validationCustom06" placeholder="Enter 10 Digit Mobile No"  maxlength="10" required readonly>
+                  </div>                             
+                    
+                  <div class="col-md-3 mb-3">
+                      <label class="form-control-label" for="exampleTextarea">Address</label>
+                      <textarea class="form-control" name="address" id="Textareaaddress" rows="3" placeholder="Enter Address" readonly></textarea>
+                  </div>              
+                </div>
+
+
+                <div class="form-row">
+
+                  <div class="col-md-3 mb-3">
+                      <label class="form-control-label" for="validationCustomUsername">Username</label>
+                      <input type="text" class="form-control" name="username" id="validationCustomUsername" placeholder="Enter Username" aria-describedby="inputGroupPrepend" required>
+                  </div>
+
+                  <div class="col-md-3 mb-3">
+                      <label class="form-control-label" for="validationCustom04">Password</label>
+                      <div class="userpassword">
+                        <div class="input-group-prepend">
+                        <input type="password" name="pwd" class="form-control" id="passowrd" maxlength="10" placeholder="Enter Password" required> 
+                        <span class="input-group-text">
+                        <i class="far fa-eye" id="togglePassword" style=" cursor: pointer;"></i></span>
+                        </div> 
+                      </div>                            
+                  </div>                 
+                  
+                  <div class="col-md-3 mb-3">
+                      <label class="form-control-label" for="validationCustom04">Conform Password</label>
+                      <input type="password" class="form-control" id="conformpass" placeholder="Enter Password" required> 
+                      <div id="validatestatus" style="color: red;"></div>                               
+                  </div>
+                
+                    
+                  <div class="col-md-3 mb-3">
+                    <label class="form-control-label" for="exampleFormControlSelect1">Select User Role</label>
+                    <select class="form-control" name="role" id="role">
+                      <option value="admin" >ADMIN</option>
+                      <option value="user">USER</option>
+                    </select>
+                  </div>                               
+
+                  <div class="col-md-12 mb-3">
+                    <label class="form-control-label" for="exampleFormControlSelect1">Sidebar Access</label>
+                      <div class="row" style="margin-left: 15px;">
+
+                        <div class="col-lg-2" style="margin: 0 0 7PX 0;">  
+                          <input class="custom-control-input" type="checkbox" name="sidebarmenu[]"  value="<?php  echo $this->mastervalue[0]['sidebar_name'];?>" id="customCheck"> 
+                          <label class="custom-control-label" for="customCheck">SETTING'S</label>
+                        </div>    
+
+                          <?php  foreach ($this->sidemenu as $i=>$res) { ?>                
+                        <div class="col-lg-3" style="margin: 0 0 7PX 0;">  
+                          <input type="checkbox" class="custom-control-input" name="sidebarmenu[]" value="<?php echo $res['sidebar_id'] ;?>" id="customCheck<?php echo$i+1 ?>">
+                          <label class="custom-control-label" for="customCheck<?php echo$i+1 ?>"> <?php echo strtoupper($res['sidebar_name']);?>  </label>
+                        </div>                    
+                          <?php }?>                                 
+                      </div>
+                  </div>                               
+
+                </div>
+
+                <button class="btn btn-primary" type="submit">Submit form</button><!-- Submit Button -->
+                
+              </form>
+                <!-- Add Employee Form groups used in grid -->
+            </div>
+              <!-- Card body -->
+          </div>
+        </div>
+      </div>
+    </div>
+      <!-- Add Employee Form Model -->
+
+       <!-- edit Employee Form Model -->
+    <div class="modal fade" id="editbd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="card mb-4">
+              <!-- Card header -->
+            <div class="card-header">
+                <h3 class="mb-0">Edit User Access</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div><!-- Card header -->
+              
+              <!-- Card body -->
+            <div class="card-body">
+                <!-- Add Employee Form groups used in grid -->
+              <form id="editform" class="needs-validation" novalidate>
+                  <input type="hidden"  name="editid">
+
+                <div class="form-row">
+
+                      <div class="col-md-3 mb-3">
+                        <label class="form-control-label" for="exampleFormControlSelect1">User Name</label>
+                        <select class="form-control" name="name" id="editempname" required>
+                        <option value="" >Select User Name</option>
+                        <?php foreach ($this->uname as $res) { ?>
+                          <option value="<?=$this->escape($res['emp_name']);?>" ><?=$this->escape($res['emp_name']);?></option>
+                          <?php } ?>
+                        </select>
+                      </div>                   
+
+                    <div class="col-md-3 mb-3">
+                        <label class="form-control-label" for="validationCustom03">Email</label>
+                        <input type="email" name="email" class="form-control" id="email" placeholder="Enter Email" required readonly>
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                      <label class="form-control-label" for="validationCustom05">Mobile No </label>
+                      <input type="text" name="mobileNo" class="form-control" id="validationCustom06" placeholder="Enter 10 Digit Mobile No"  maxlength="10" required readonly>
+                  </div>                             
+                    
+                  <div class="col-md-3 mb-3">
+                      <label class="form-control-label" for="exampleTextarea">Address</label>
+                      <textarea class="form-control" name="address" id="Textareaaddress" rows="3" placeholder="Enter Address" readonly></textarea>
+                  </div>              
+                </div>
+
+
+                <div class="form-row">
+
+                  <div class="col-md-3 mb-3">
+                      <label class="form-control-label" for="validationCustomUsername">Username</label>
+                      <input type="text" class="form-control" name="username" id="validationCustomUsername" placeholder="Enter Username" aria-describedby="inputGroupPrepend" required>
+                  </div>
+
+                  <!-- <div class="col-md-3 mb-3">
+                      <label class="form-control-label" for="validationCustom04">Password</label>
+                      <div class="userpassword">
+                        <div class="input-group-prepend">
+                        <input type="password" name="pwd" class="form-control" id="editpassowrd" maxlength="10" placeholder="Enter Password" required> 
+                        <span class="input-group-text">
+                        <i class="far fa-eye" id="edittogglePassword" style=" cursor: pointer;"></i></span>
+                        </div> 
+                      </div>                            
+                  </div>                 
+                  
+                  <div class="col-md-3 mb-3">
+                      <label class="form-control-label" for="validationCustom04">Conform Password</label>
+                      <input type="password" class="form-control" id="editconformpass" placeholder="Enter Password" required> 
+                      <div id="editvalidatestatus" style="color: red;"></div>                               
+                  </div> -->
+                
+                    
+                  <div class="col-md-3 mb-3">
+                    <label class="form-control-label" for="exampleFormControlSelect1">Select User Role</label>
+                    <select class="form-control" name="role" id="role">
+                    <option value="" >Select Role</option>
+                      <option value="admin" >ADMIN</option>
+                      <option value="user">USER</option>
+                    </select>
+                  </div>                               
+
+                  <div class="col-md-12 mb-3">
+                    <label class="form-control-label" for="exampleFormControlSelect1">Sidebar Access</label>
+                      <div class="row" style="margin-left: 15px;">
+
+                        <div class="col-lg-2" style="margin: 0 0 7PX 0;">  
+                          <input class="custom-control-input" type="checkbox" name="sidebarmenu[]"  value="<?php  echo $this->mastervalue[0]['sidebar_name'];?>" id="<?php echo 't'.$this->mastervalue[0]['sidebar_name'] ;?>"> 
+                          <label class="custom-control-label" for="<?php echo 't'.$this->mastervalue[0]['sidebar_name'] ;?>">SETTING'S</label>
+                        </div>    
+
+                          <?php  foreach ($this->sidemenu as $i=>$res) { ?>                
+                        <div class="col-lg-3" style="margin: 0 0 7PX 0;">  
+                          <input type="checkbox" class="custom-control-input" name="sidebarmenu[]" value="<?php echo $res['sidebar_id'] ;?>" id="<?php echo 't'.$res['sidebar_id'] ;?>">
+                          <label class="custom-control-label" for="<?php echo 't'.$res['sidebar_id'] ;?>"> <?php echo strtoupper($res['sidebar_name']);?>  </label>
+                        </div>                    
+                          <?php }?>                                 
+                      </div>
+                  </div>                              
+
+                </div>
+
+                <button class="btn btn-primary" type="submit">Submit form</button><!-- Submit Button -->
+                
+              </form>
+                <!-- Add Employee Form groups used in grid -->
+            </div>
+              <!-- Card body -->
+          </div>
+        </div>
+      </div>
+    </div>
+      <!-- edit Employee Form Model -->
+
+      <!-- Employee table  -->
+    <div class="row">
+      <div class="col">
+        <div class="card">
+            <!-- Card header -->
+          <div class="card-header">
+            <h3 class="mb-0"><?= $this->escape($this->pageheader); ?> Table</h3>
+          </div><!-- Card header -->
+
+          <div class="table-responsive py-4">
+            <table class="table table-flush" id="datatable-buttons">
+                <!-- Table Header -->
+              <thead class="thead-light">
+                <tr>
+                  <th>Sno.</th>
+                  <th>Name</th>
+                  <th>User Name</th>
+                  <th>Email</th>
+                  <th>Role</th>
+                  <th>Action</th>
+                </tr>
+              </thead><!-- Table Header -->
+              
+                <!-- Table Body -->
+              <tbody>
+                  <?php foreach ($this->userlist as $i=>$res) { ?> 
+                <tr>
+                  <td><?= $i + 1;?></td>
+                  <td><?=$this->escape($res['Name']);?></td>
+                  <td><?=$this->escape($res['UserName']);?></td>
+                  <td><?=$this->escape($res['emailId']);?></td>                    
+                  <td><?=$this->escape($res['Role']);?></td>
+                  <td> <a href="javascript:;"class="delete" uid="<?php echo $res["Sno"]; ?>">
+                       <i class="fa fa-trash" aria-hidden="true"></i></a>
+                      <a href="javascript:;"  class="edit" data-toggle="modal" data-target="#editbd-example-modal-lg" editid="<?php echo $res["Sno"]; ?>">
+                      <i class="fas fa-edit"></i></a>
+                  </td>
+                </tr>               
+                <?php } ?>          
+              </tbody>
+                <!-- Table Body -->
+              
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+      <!-- End Employee table  -->
+  </div>
+      <!-- Page content -->
+<!-- </div> -->
+ 
+  <script src="./assets/js/argon.js"></script>
+  <script type="text/javascript">
+
+    $(document).ready(function () {
+
+            /*  ********************  Submit Form Script *********************  */
+        $('#Form').on('submit', function (e) {
+            // Save the form data via an Ajax request
+          e.preventDefault();
+           $('button[type="submit"]').prop('disabled', true);   
+           
+           var conformpass = $('#conformpass').val();
+           if(conformpass == ''){
+            $('#validatestatus').html('Please Match Your Password').css('color', 'red');
+            return false;
+           }
+
+          var $form = $(e.target);
+            $.ajax({
+                type: 'POST',
+                url: '<?php echo $this->url(array('module'=>'default', 'controller' => 'useraccess', 'action' => 'save'));?>',
+                data: $form.serialize(),
+                success: function(response){
+                  var obj = $.parseJSON(response);
+                  $('button[type="submit"]').prop('disabled', false);
+                  if (obj.result) {
+                    if(obj.result == "Records has been Inserted Successfully !!"){
+                      $('#bd-example-modal-lg').hide();
+                      if (confirm(obj.result)) {
+                        window.location.reload();
+                        } else {
+                          window.location.reload();
+                        }                    
+                  }else{
+                    alert(obj.result);
+                    return false;
+                  }                 
+                      
+                  }
+                  
+                }
+            });
+        });
+            /*  ********************  Submit Form Script *********************  */
+
+            $('#empname').on('input', function(){
+               var emp_name = $(this).val();
+              $.ajax({
+                  type: 'POST',
+                  url: '<?php echo $this->url(array('module'=>'default', 'controller' => 'useraccess', 'action' => 'empdata'));?>',
+                  data: {emp_name},
+                  success: function(response){
+                    var obj = $.parseJSON(response);                     
+                    $('#Form')
+                        .find('[name="email"]').val(obj.email).end()                   
+                        .find('[name="mobileNo"]').val(obj.phone).end()
+                        .find('[name="address"]').val(obj.address).end() ;
+                  }
+              });
+            })
+
+            $('#conformpass').on('keyup', function () {
+                if ($('#passowrd').val() == $('#conformpass').val()) {
+                    $('#validatestatus').html('Matching').css('color', 'green');
+                } else 
+                    $('#validatestatus').html('Not Matching').css('color', 'red');
+                    $('button[type="submit"]').prop('disabled', false); 
+                    return;
+            });         
+
+                  //--------------------------
+                  const togglePassword = document.querySelector('#togglePassword');
+                  const password = document.querySelector('#passowrd');
+
+                  togglePassword.addEventListener('click', function (e) {
+                    // toggle the type attribute
+                    const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+                    password.setAttribute('type', type);
+                    // toggle the eye slash icon
+                    this.classList.toggle('fa-eye-slash');
+                  });
+
+                   /*  ********************  Edit Form Script *********************  */
+                    $('#datatable-buttons').on('click', 'a.edit', function() {			
+                        // Get the record's ID via attribute
+                        var id = $(this).attr('editid');
+                        $.ajax({
+                            url: '<?php echo $this->url(array('module'=>'default', 'controller' => 'useraccess', 'action' => 'editform'));?>',
+                            data: {'emp_id': id},
+                            type: 'GET' ,
+                            success: function(response){
+                              var response = $.parseJSON(response);
+                              var array = response.sideBar.split(',');
+                              console.log(array);
+                                // Populate the form fields with the data returned from server
+                              $('#editform')                  
+                                .find('[name="editid"]').val(response.id).end()
+                                .find('[name="username"]').val(response.UserName).end()
+                                .find('[name="name"]').val(response.Name).end()
+                                .find('[name="address"]').val(response.Address).end()
+                                .find('[name="mobileNo"]').val(response.mobileNo).end()                   
+                                .find('[name="email"]').val(response.emailId).end()
+                                .find('[name="role"]').val(response.Role).end()  
+                                .find('[name="sidebarmenu"]').val(response.sideBar).end();   
+                                
+                                jQuery.each(array, function() {
+                                        jQuery('#t'+this).parent('div').addClass('checked');
+                                      var test =  jQuery('input[id="t'+this+'"]');
+                                          //  console.log(test);
+                                      jQuery('input[id="t'+this+'"]').attr('checked','checked');
+                                  });
+                            }  
+                        });
+                    }) //Edit form View Script
+
+                        $('#editform').on('submit', function (e) {
+                          // Save the form data via an Ajax request
+                          e.preventDefault();
+                          $('button[type="submit"]').prop('disabled', true);   
+                          
+                          var $form = $(e.target);
+                            $.ajax({
+                                type: 'POST',
+                                url: '<?php echo $this->url(array('module'=>'default', 'controller' => 'useraccess', 'action' => 'submiteditedform'));?>',
+                                data: $form.serialize(),
+                                success: function(response){
+                                  var obj = $.parseJSON(response);
+                                  $('button[type="submit"]').prop('disabled', false);
+                                  if (obj.result) {
+                                    if(obj.result == "Records has been Inserted Successfully !!"){
+                                      $('#bd-example-modal-lg').hide();
+                                      if (confirm(obj.result)) {
+                                        window.location.reload();
+                                        } else {
+                                          window.location.reload();
+                                        }                    
+                                  }else{
+                                    alert(obj.result);
+                                    return false;
+                                  }                 
+                                      
+                                  }
+                                  
+                                }
+                            });
+                        });
+
+                          /*  ********************  Delete Form Script *********************  */
+                    $('#datatable-buttons').on('click', 'a.delete', function() {
+                      if (!confirm("Are you sure to delete?")) return false;
+                      var r = prompt( "Type the word 'DELETE' to delete");
+                      if (r == 'DELETE') {
+                        var tr = $(this).closest('tr')[0];
+                        var uid = $(this).attr('uid');                       
+                        // console.log(tr);
+                        $.ajax({
+                            type: "GET",
+                            url: "<?php echo $this->url(array('module'=>'default', 'controller' => 'useraccess', 'action' => 'delete'));?>" ,
+                            data: {'emp_id' :uid},
+                            success: function () {
+                              // $('#datatable-buttons').row(tr).remove().draw(false);
+                              $(tr).remove(); 
+                            },
+                            error: function () {
+                            }
+                        });
+                      }
+                    })
+                      /*  ********************  Delete Form Script *********************  */
+
+})
+$(".sidenav-toggler").click(function(){
+	var $this = $(this);
+	var action = $this.data('action');
+	// console.log(action);
+		if(action == 'sidenav-pin'){
+			$('.sidenav-toggler').removeClass('active');
+			$('.sidenav-toggler').data('action', 'sidenav-unpin');
+			$('body').removeClass('g-sidenav-pinned').addClass('g-sidenav-hidden');
+			$('body').find('.backdrop').remove();
+			// Store the sidenav state in a cookie session
+			Cookies.set('sidenav-state', 'unpinned');
+		}else{
+			$('.sidenav-toggler').addClass('active');
+			$('.sidenav-toggler').data('action', 'sidenav-pin');
+			$('body').removeClass('g-sidenav-hidden').addClass('g-sidenav-show g-sidenav-pinned');
+			$('body').append('<div class="backdrop d-xl-none" data-action="sidenav-unpin" data-target='+$('#sidenav-main').data('target')+' />');
+			// Store the sidenav state in a cookie session
+			Cookies.set('sidenav-state', 'pinned');
+		}
+	});
+  </script>
+
+ 

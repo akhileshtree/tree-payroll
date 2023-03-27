@@ -1,0 +1,88 @@
+﻿<?php
+	echo "<!DOCTYPE html>"."\n";
+	$Session=new Zend_Session_Namespace("ZSN");
+	$db = Zend_Db_Table::getDefaultAdapter();
+	if(isset($Session->LoginName) && isset($Session->LoginPassword))
+	{
+		$updt=$db->query("call proupdatesessionmanagement(now(),'$Session->RandNo')");
+		$db->closeConnection();
+	}
+?>
+<html lang="en">
+<head>
+<!--
+	Tree Multisoft Services
+	Copyright 2014
+	Licensed under the Apache License v2.0
+	http://www.apache.org/licenses/LICENSE-2.0
+	http://www.treemultisoft.com
+	http://facebook.com/treemultisoft
+	http://twitter.com/treemultisoft
+-->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
+<?php
+$this->headTitle("Welcome To Billing Software Control Panel");
+$this->headMeta()->appendHttpEquiv('Cache-Control','text/html; charset=utf-8')
+								->appendName('description', '')
+								->appendName('keywords', '');						
+/*css files*/
+$this->headLink()->appendStylesheet($this->BaseUrl().'/assets/css/bootstrap.min.css');
+$this->headLink()->appendStylesheet($this->BaseUrl().'/assets/css/bootstrap.css');
+$this->headLink()->appendStylesheet($this->BaseUrl().'/assets/css/argon.css');
+$this->headLink()->appendStylesheet($this->BaseUrl().'/assets/vendor/nucleo/css/nucleo.css');
+$this->headLink()->appendStylesheet($this->BaseUrl().'/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css');
+
+/* end css */
+
+/*script files */
+$this->headScript()->appendFile($this->BaseUrl().'/assets/vendor/jquery/dist/jquery.min.js','text/javascript');
+$this->headScript()->appendFile($this->BaseUrl().'/assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js','text/javascript');
+$this->headScript()->appendFile($this->BaseUrl().'/assets/vendor/js-cookie/js.cookie.js','text/javascript');
+$this->headScript()->appendFile($this->BaseUrl().'/assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js','text/javascript');
+$this->headScript()->appendFile($this->BaseUrl().'/assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js','text/javascript');
+$this->headScript()->appendFile($this->BaseUrl().'/assets/vendor/chart.js/dist/Chart.min.js','text/javascript');
+$this->headScript()->appendFile($this->BaseUrl().'/assets/vendor/chart.js/dist/Chart.extension.js','text/javascript');
+$this->headScript()->appendFile($this->BaseUrl().'/assets/js/argon.js','text/javascript');
+$this->headScript()->appendFile($this->BaseUrl().'/assets/js/demo.min.js','text/javascript');
+
+/*end script */
+echo $this->headTitle()."\n";
+echo $this->headMeta()."\n";
+echo $this->headLink()."\n";
+echo $this->headScript()."\n";
+?>
+
+</head>
+<body class="g-sidenav-show g-sidenav-pinned">
+       
+			  <?= $this->render("sidebar.phtml");?>
+			  <?= $this->render("topbar.phtml");?>
+			  <div class="main-content" id="panel">
+       			<?php echo $this->layout()->content; ?> 
+			  </div>
+			
+<script type="text/javascript">
+
+	$(".sidenav-toggler").click(function(){
+	var $this = $(this);
+	var action = $this.data('action');
+		if(action == 'sidenav-pin'){
+			$('.sidenav-toggler').removeClass('active');
+			$('.sidenav-toggler').data('action', 'sidenav-unpin');
+			$('body').removeClass('g-sidenav-pinned').addClass('g-sidenav-hidden');
+			$('body').find('.backdrop').remove();
+			// Store the sidenav state in a cookie session
+			Cookies.set('sidenav-state', 'unpinned');
+		}else{
+			$('.sidenav-toggler').addClass('active');
+			$('.sidenav-toggler').data('action', 'sidenav-pin');
+			$('body').removeClass('g-sidenav-hidden').addClass('g-sidenav-show g-sidenav-pinned');
+			$('body').append('<div class="backdrop d-xl-none" data-action="sidenav-unpin" data-target='+$('#sidenav-main').data('target')+' />');
+			// Store the sidenav state in a cookie session
+			Cookies.set('sidenav-state', 'pinned');
+		}
+	});
+
+</script>
+</body>
+</html>

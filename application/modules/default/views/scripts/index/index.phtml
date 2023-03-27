@@ -1,0 +1,73 @@
+﻿<?php
+$Session = new Zend_Session_Namespace("ZSN");
+?>
+	<div id="exp" style="display:none"><?=$Session->expired?></div>
+		<form  id="user" class="form-horizontal" enctype="application/x-www-form-urlencoded" action="<?php echo $this->url(array('module'=>'default','controller'=>'Index','action'=>'login'),null,true);?>" method="post" autocomplete="on">										
+											
+				<div class="form-group mb-3">
+					<div class="input-group input-group-merge input-group-alternative">
+						<div class="input-group-prepend">
+							<span class="input-group-text"><i class="ni ni-email-83"></i></span>
+						</div>
+						<input type="text" class="form-control" id="username" value="<?php if(isset($Session->UName)){ echo $this->escape($Session->UName);} ?>" name="Db_Un" maxlength="100" required placeholder="ENTER USER NAME">
+					</div>
+				</div>
+				<div class="clearfix"></div>
+
+				<div class="form-group mb-3">
+					<div class="input-group input-group-merge input-group-alternative">
+						<div class="input-group-prepend">
+							<span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+						</div>
+						<input type="password" class="form-control" id="password" name="Db_Pw" maxlength="50" required placeholder="ENTER PASSWORD">
+					</div>
+				</div>
+				<div class="clearfix"></div>
+													
+				<!-- <div class="form-group  mb-3">							
+					<div class="input-group input-group-merge input-group-alternative">
+						<div class="input-group-prepend">
+							<span class="input-group-text"></span>
+						</div>
+						<input type="text" class="form-control" id="captcha"  name="captcha" maxlength="6" required autocomplete="off" placeholder="ENTER CAPTCHA CODE">
+					</div>
+					<div class="col-md-3">
+						<img id="captcha_code" src="<?php echo $this->url(array('module'=>'default','controller'=>'index','action'=>'captcha'),NULL,TRUE);?>" />
+						<small><a href="javascript:;" id="refresh_captcha" ><i class="icon-repeat"></i>Reload</a></small>
+					</div>
+				</div>									
+				<div class="clearfix"></div> -->
+
+				<div class="text-center">
+                  <button type="submit" class="btn btn-primary my-4">Login</button>
+                </div>
+		</form>
+
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+<script type="text/javascript">
+	$("#refresh_captcha").click(function () {
+		const randNo = Math.random()*100+1
+                $("#captcha_code").attr("src","<?php echo 
+                	$this->url(array('module' => 'default', 'controller' => 'index', 'action' => 'captcha'),NULL,TRUE);?>/id/"+randNo);
+                return false;
+            });
+
+$("#user").validate({
+                
+                rules: {
+                	captcha : {
+                        required : true,
+                        remote : "<?php echo $this->url(array('module' => 'default', 'controller' => 'index', 'action' => 'checkcaptcha'),NULL,TRUE);?>"
+                    }
+
+                },
+                 messages: {
+                   
+                    captcha : {
+                        required : "Please enter captcha code.",
+                        remote : "Correct captcha is required."
+                    }
+                },
+            });
+</script>
+<?php unset($Session->expired);?>

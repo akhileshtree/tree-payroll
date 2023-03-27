@@ -1,0 +1,307 @@
+﻿<!-- Main content -->
+<div class="main-content" id="panel userprofile_page">
+  <!-- Header -->
+  <div class="header bg-primary pb-6" style="margin-top: -23px;     height: 186px;">
+    <div class="container-fluid">
+      <div class="header-body">
+        <div class="row align-items-center py-4">
+          <div class="col-lg-6 col-7">
+            <h6 class="h2 text-white d-inline-block mb-0">Profile</h6>
+            <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+              <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                <li class="breadcrumb-item"><a href="<?= $this->url(array('module' => 'default', 'controller' => 'dashbord'), null, true); ?>"><i class="fas fa-home"></i></a></li>
+                <li class="breadcrumb-item"><a href="#"></a></li>
+              </ol>
+            </nav>
+          </div>
+        </div>              
+      </div>
+    </div>
+  </div>
+  <!-- Page content -->
+  <div class="container-fluid mt--6">
+    <div class="row">
+      <div class="col-xl-4 order-xl-2">
+          <!-- bg-gradient-success1 -->
+          <form id="profileForm" class="imgprofile_edit_data">
+            <div class="card card-profile card_profileimg ">                
+              <div class="row justify-content-center">
+                <div class="col-lg-6">
+                  <div class="card-profile-image">
+                    <div class="picture">
+                      <img src="<?=$this->baseUrl();?>/images/cImage/<?= $this->login_user['photo']; ?>" class="picture-src rounded-circle" id="wizardPicturePreview" title="">
+                      <input type="file" name="employee_img" id="wizard-picture" class="" onchange="return fileValidation()">
+                    </div>  
+                  </div>
+                  <h6 class="profilename imgtxt">Choose Picture</h6>
+                </div>
+              </div>
+              <div class="card-body pt-0">
+                <div class="text-center">
+                  <h5 class="h3 profilename">
+                  <?= $this->user['Name']; ?>
+                  </h5>
+                </div>
+                <input type="hidden" name="u" value="<?= $this->login_user['photo']; ?>">
+                <button class="btn btn-primary" id="uploadimage" type="submit">Upload</button>
+              </div>
+            </div>
+          </form>
+        <!-- Progress track -->
+        <div class="card">
+          <!-- Card header -->
+          <div class="card-header">
+            <!-- Title -->
+            <h5 class="h3 mb-0">Progress track</h5>
+          </div>
+          <!-- Card body -->
+          <div class="card-body">
+            <!-- List group -->
+            <ul class="list-group list-group-flush list my--3">
+              <li class="list-group-item px-0">
+                <div class="row align-items-center">
+                  <div class="col-auto">
+                    <!-- Avatar -->
+                    <a href="#" class="avatar rounded-circle">
+                      <!-- <img alt="Image placeholder" src="../../assets/img/theme/bootstrap.jpg"> -->
+                    </a>
+                  </div>
+                  <div class="col">
+                    <h5>Argon Design System</h5>
+                    <div class="progress progress-xs mb-0">
+                      <div class="progress-bar bg-orange" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;"></div>
+                    </div>
+                  </div>
+                </div>
+              </li>              
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-8 order-xl-1">
+      
+        <div class="card">
+          <div class="card-header">
+            <div class="row align-items-center">
+              <div class="col-8">
+                <h3 class="mb-0">General Details </h3>
+              </div>
+              <div class="col-4 text-right">
+
+              <button id="show_editform" class="btn btn-sm btn-primary">Edit</button>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <form class="profile_show_data" style="display: block;">
+              <div class="form-group row ">
+                <label for="example-text-input" class="col-md-2 col-form-label form-control-label">Name</label>
+                <div class="col-md-10 col-form-label">
+                  <span class="form-control-label col-form-label"><?= $this->user['Name']; ?></span>
+                </div>
+              </div>
+              <div class="form-group row ">
+                <label for="example-search-input col-form-label" class="col-md-2 col-form-label form-control-label">User Name</label>
+                <div class="col-md-10 col-form-label">
+                  <span class="form-control-label col-form-label"><?= $this->user['UserName']; ?></span>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="example-email-input" class="col-md-2 col-form-label form-control-label">Email</label>
+                <div class="col-md-10 col-form-label">
+                <span class="form-control-label col-form-label"><?= $this->user['emailId']; ?></span>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="example-tel-input" class="col-md-2 col-form-label form-control-label">Phone</label>
+                <div class="col-md-10 col-form-label">
+                <span class="form-control-label col-form-label"><?= $this->user['mobileNo']; ?></span>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="example-number-input" class="col-md-2 col-form-label form-control-label">Role</label>
+                <div class="col-md-10 col-form-label">
+                <span class="form-control-label col-form-label"><?= $this->user['Role']; ?></span>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="example-number-input" class="col-md-2 col-form-label form-control-label">Address</label>
+                <div class="col-md-10 col-form-label">
+                <span class="form-control-label col-form-label"><?= $this->user['Address']; ?></span>
+                </div>
+              </div>  
+              <hr class="my-4" />
+            </form>
+
+                <form id="Form" class="profile_edit_data" style="display: none;">
+
+                  <div class="form-group row ">
+                    <label for="example-text-input" class="col-md-2 col-form-label form-control-label">Name</label>
+                    <div class="col-md-10 col-form-label">
+                      <input type="text" name="Name" class="form-control" id="Name" value="<?= $this->user['Name']; ?>"  maxlength="50" > 
+                    </div>
+                  </div>
+                  <div class="form-group row ">
+                    <label for="example-search-input col-form-label" class="col-md-2 col-form-label form-control-label">User Name</label>
+                    <div class="col-md-10 col-form-label">
+                        <input type="text" name="UserName" class="form-control" id="UserName" value="<?= $this->user['UserName']; ?>"  maxlength="50" >                      
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="example-email-input" class="col-md-2 col-form-label form-control-label">Email</label>
+                    <div class="col-md-10 col-form-label">
+                      <input type="email" name="emailId" class="form-control" id="emailId" value="<?= $this->user['emailId']; ?>"  maxlength="50" >                    
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label for="example-tel-input" class="col-md-2 col-form-label form-control-label">Phone</label>
+                    <div class="col-md-10 col-form-label">
+                      <input type="text" name="mobileNo" class="form-control" id="mobileNo" onkeypress="return isNumberKey(event)" value="<?= $this->user['mobileNo']; ?>" maxlength="10">                     
+                    </div>
+                  </div>
+                  
+                  <div class="form-group row">
+                    <label for="example-number-input" class="col-md-2 col-form-label form-control-label">Address</label>
+                    <div class="col-md-10 col-form-label">
+                      <input type="text" name="Address" class="form-control" id="Address" value="<?= $this->user['Address']; ?>">    
+                    </div>
+                  </div>
+                  
+                  <hr class="my-4" />
+                  <button class="btn btn-primary" type="submit">Submit form</button><!-- Submit Button -->
+                  <button type="button" id="cencel" class="btn btn-warning">Cencel</button>
+                </form>
+                <!-- <button type="button" id="cencel" class="btn btn-warning">Cencel</button> -->
+             
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+</div>
+<script>
+  
+</script>
+<!-- <script src="./assets/js/argon.js?v=1.1.0"></script> -->
+<script type="text/javascript">
+
+    /*  **************************************************************
+      Only Number's Validation Function Script For Contect Number's  
+    **************************************************************  */
+  function isNumberKey(evt)
+    {
+      var charCode = (evt.which) ? evt.which : evt.keyCode;
+      if (charCode != 46 && charCode > 31 
+      && (charCode < 48 || charCode > 57))
+      return false;
+      return true;
+    }
+    /*  **************************************************************
+      Only Number's Validation Function Script For Contect Number's  
+    **************************************************************  */
+    $(document).ready(function(){
+    // Prepare the preview for profile picture
+        $("#wizard-picture").change(function(){
+            readURL(this);
+        });
+    });
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#wizardPicturePreview').attr('src', e.target.result).fadeIn('slow');
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+  $(document).ready(function () {
+    $('#cencel').hide();
+    $('#show_editform').on('click', function(){
+        $('.profile_edit_data').show();
+        $('.profile_show_data').hide();
+        $('#cencel').show();
+    })
+
+    $('#cencel').on('click', function(){
+      $('.profile_edit_data').hide();
+      $('.profile_show_data').show();
+      $('#cencel').hide();
+    })
+
+          /*  ********************  Submit Form Script *********************  */
+      $('#Form').on('submit', function (e) {
+          // Save the form data via an Ajax request
+        e.preventDefault();
+          $('button[type="submit"]').prop('disabled', true);   
+        var $form = $(e.target);
+          $.ajax({
+              type: 'POST',
+              // dataType : 'json',
+              contentType: false,
+              cache: false,
+              processData:false,
+              url: '<?php echo $this->url(array('module'=>'default', 'controller' => 'dashbord', 'action' => 'profilesave'));?>',
+              data:  new FormData(this),
+              success: function(response){
+                var obj = $.parseJSON(response);
+                $('button[type="submit"]').prop('disabled', false);
+                if (obj.result) {
+                  // $('#bd-example-modal-lg').hide();
+                  if(obj.result == "Records has been Updated Successfully !!"){
+                    if (confirm(obj.result)) {
+                      window.location.reload();
+                      } else { window.location.reload();}                    
+                  }  
+                }
+              }
+          });
+      });
+        /*  ********************  Submit Form Script *********************  */
+        $('#uploadimage').hide();
+        $('#wizard-picture').on('click', function (){
+          $('#uploadimage').show();
+        })
+        $('#profileForm').on('submit', function (e) {
+          e.preventDefault();
+          var $form = $(e.target);
+          $.ajax({
+              type: 'POST',
+              // dataType : 'json',
+              contentType: false,
+              cache: false,
+              processData:false,
+              url: '<?php echo $this->url(array('module'=>'default', 'controller' => 'dashbord', 'action' => 'profileimg'));?>',
+              data:  new FormData(this),
+              success: function(response){
+                var obj = $.parseJSON(response);
+                // $('button[type="submit"]').prop('disabled', false);
+                if (obj.result) {
+                  $('#uploadimage').hide();
+                  // $('#bd-example-modal-lg').hide();
+                  // if(obj.result == "Records has been Updated Successfully !!"){
+                  //   if (confirm(obj.result)) {
+                  //     window.location.reload();
+                  //     } else { window.location.reload();}                    
+                  // }  
+                }
+              }
+          });
+
+        })
+         
+
+      
+     
+       
+     
+        
+         
+
+  })
+</script>
+
+      

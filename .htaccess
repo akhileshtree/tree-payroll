@@ -1,0 +1,20 @@
+RewriteEngine On
+
+AddType image/x-icon .ico
+RewriteRule ^favicon.ico favicon.ico [NC,L]
+
+RewriteCond %{REQUEST_FILENAME} -s [OR]
+RewriteCond %{REQUEST_FILENAME} -l [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^.*$ - [NC,L]
+RewriteRule ^.*$ index.php [NC,L]
+ErrorDocument 404 /index.php
+
+RewriteRule !\.(pdf|php|js|ico|txt|gif|jpg|png|css|rss|zip|tar|eot|svg|ttf|woff|xml|html|htm|docx|doc|xls|xlsx|\.gz)$ index.php
+
+#<IfModule mod_php5.c>
+#php_value session.save_path "new/username/php_sessions"
+#php_value session.gc_maxlifetime "86400"
+#php_value session.cookie_lifetime "86400"
+
+#</IfModule>

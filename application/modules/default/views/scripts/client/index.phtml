@@ -1,0 +1,613 @@
+﻿<style>
+    .modal-body .form-group {
+            width: 100%;  margin-bottom: 15px;
+    }
+    #service_type_chzn { 
+        width: 100% !important;
+    }
+    #service_type_chzn input.default {width: 100% !important; padding: 15px !important;}
+    section.content-header {margin-top: 20px;
+     }
+
+    .chzn-container.chzn-container-single {
+        width: 100% !important; /* or any value that fits your needs */
+    }
+
+    div.chzn-search input {
+        width: 100% !important; /* or any value that fits your needs */
+    }
+    #editservice_type_chzn {width: 100% !important;}
+    #editservice_type_chzn input.default {width: 100% !important;
+         padding: 15px !important;}
+    div.chzn-drop {width: 100% !important;  }
+
+    .chzn-container-single .chzn-single {
+        height: 34px;
+        line-height: 32px;
+    }
+
+    #familyName_chzn.chzn-container-single .chzn-single {
+        margin-top: 0px; }
+
+    button#addRow {
+        margin: 3px 0px 0px 20px;
+    }
+    .modal-wide, .modal-dialog {
+        width: 50%;
+        height: auto;
+    }
+
+    #example_processing {
+        position: absolute;
+        top: 50%;   left: 50%;  width: 100%; height: 40px; margin-left: -50%; margin-top: -25px; padding-top: 20px;
+        padding-bottom: 40px; text-align: center;  font-size: 1.2em; font-weight: bold;
+        background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(81, 193, 23, 0.901961) 25%, rgb(147, 195, 92) 75%, rgba(255, 255, 255, 0) 100%);
+        display: block;
+    }   
+    .ui-timepicker-container.ui-timepicker-standard {
+        z-index: 100000 !important;
+    }
+</style>
+
+
+<div class="clearfix">
+    <div class="btn-group" style="width:100%">
+        <button id="AddButton" class="btn blue">Add New <i class="fa fa-fw fa-plus-square-o"></i></button>        
+    </div>
+</div><!----add button--->
+
+<!----Client Table--->
+<div class="box box-primary">
+    <div class="box-header">
+        <h3 class="box-title">
+            <span class="glyphicon glyphicon-list-alt"></span>
+             <?= $this->escape($this->pageheader); ?>
+        </h3>
+    </div><!-- /.box-header -->
+    <div class="box-body table-responsive">
+        <table id="example" class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th><i class="fa fa-fw fa-th"></i> SNo</th>
+                    <th><i class="fa fa-fw fa-th"></i> Client Name</th>
+                    <th><i class="fa fa-fw fa-th"></i> Business Type</th>
+                    <th><i class="fa fa-fw fa-th"></i> Phone No.</th>
+                    <th><i class="fa fa-fw fa-th"></i> Service type</th>
+                    <th><i class="fa fa-fw fa-th"></i> Service Date</th>
+                    <!-- <th><i class="fa fa-fw fa-th"></i> AMC Date</th> -->
+                    <th><i class="fa fa-fw fa-th"></i> GST No.</th>
+                    <th><i class="fa fa-fw fa-th"></i> Status</th>
+                    <th><i class="fa fa-fw fa-cog"></i> Actions</th>
+                </tr>
+            </thead>
+        </table>
+    </div><!-- /.box-body -->
+</div><!-- /.box -->
+<!-----------------------------------------------------------------------------
+***************************************Add Form ******************************
+----------------------------------------------------------------------------->
+
+<form class="form-inline" role="form" id="Form" style="display:none;">
+
+    <div class="form-group">
+        <label class="col-xs-12 control-label">Fields Marked with <span style="color:red"><strong>*</strong></span> are
+            mandatory.</label>
+    </div>     
+
+	<div class="form-group">
+        <label class="col-xs-3 control-label">Client Name<span style="color:red"><strong>*</strong></span> :</label>
+            <div class="col-xs-5">
+                <input type="text" class="form-control" name="client" id="client"  maxlength="50" placeholder="Client Name" required>   
+                <div id="alertnamemsg" style="color: red;"></div> 
+            </div>
+    </div>
+	
+	 <div class="form-group" id="selectContainer">
+		<label class="col-xs-3 control-label">Business type<span style="color:red"><strong>*</strong></span> :</label>
+        <div class="col-xs-5">
+            <select class="form-control chzn-select" name="business_type" id="business_type" data-placeholder="Select Business type" required>
+                <option value=""></option>
+                <?php
+                ?>
+            </select>
+        </div>
+     </div>
+
+	<div class="form-group">
+        <label class="col-xs-3 control-label">Phone No.<span style="color:red"><strong>*</strong></span> :</label>
+        <div class="col-xs-5">
+            <input type="text" id="phone" name="phone" maxlength="10" class="form-control"  placeholder="Phone Number." required>
+        </div>
+    </div>	
+
+	<div class="form-group">
+        <label class="col-xs-3 control-label">Address<span style="color:red"><strong>*</strong></span> :</label>
+        <div class="col-xs-5">
+            <input type="text" class="form-control" name="address" id="address" maxlength="50" placeholder="Address" required>
+        </div>
+    </div>
+
+	<div class="form-group">
+		<label class="col-xs-3 control-label">Service type<span style="color:red"><strong>*</strong></span> :</label>
+        <div class="col-xs-5">
+            <select multiple="multiple"  class="form-control chzn-select" name="service_type[]" id="service_type" data-placeholder="Select Service type" required>
+            <option value=""></option>
+                <?php
+                ?>
+            </select>
+        </div>
+	</div>	
+
+	<div class="form-group">
+        <label class="col-xs-3 control-label">Work Starting Date<span style="color:red"><strong>*</strong></span> :</label>
+        <div class="col-xs-5">
+            <input type="date" class="form-control" name="service_date" id="service_date"  placeholder="Service Date" >
+        </div>
+    </div>
+	
+    <!-- <div class="form-group">
+        <label class="col-xs-3 control-label">AMC / Renewal Date<span style="color:red"><strong>*</strong></span> :</label>
+        <div class="col-xs-5">
+            <input type="date" class="form-control" name="amc_date" id="amc_date"  placeholder="AMC Date" >
+        </div>
+    </div> -->
+
+    <div class="form-group">
+        <label class="col-xs-3 control-label">GST No.<span style="color:red"><strong>*</strong></span> :</label>
+        <div class="col-xs-5">
+            <input type="text" class="form-control" name="gst_no" id="gst_no" maxlength="50" placeholder="GST No." >
+            <div id="alertmsg" style="color: red;"></div> 
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <div class="col-xs-5 col-xs-offset-3">
+            <button type="submit" class="btn btn-default">Save</button>
+        </div>
+    </div>
+</form><!-- end of add form -->
+
+<!-----------------------------------------------------------------------------
+***************************************Edit Form ******************************
+----------------------------------------------------------------------------->
+<form class="form-inline"  role="form" id="editForm" style="display:none;">
+    <input type="hidden" id="editForm_id" name="editForm_id" value=""/>
+
+    <div class="form-group">
+        <label class="col-xs-12 control-label">Fields Marked with <span style="color:red"><strong>*</strong></span> are
+            mandatory.</label>
+    </div>
+		
+	<div class="form-group">
+        <label class="col-xs-3 control-label">Client Name<span style="color:red"><strong>*</strong></span> :</label>
+        <div class="col-xs-5">
+            <input type="text" class="form-control" name="client" id="client" maxlength="50" placeholder="Client Name">
+        </div>
+    </div>
+
+	<div class="form-group">
+		<label class="col-xs-3 control-label">Business type<span style="color:red"><strong>*</strong></span> :</label>
+        <div class="col-xs-5">
+            <select class="form-control chzn-select" name="business_type" id="editbusiness_type" data-placeholder="Select Business type">
+                <option value=""></option>
+                <?php
+                ?>
+            </select>
+        </div>
+	</div>	
+
+	<div class="form-group">
+        <label class="col-xs-3 control-label">Phone No.<span style="color:red"><strong>*</strong></span> :</label>
+        <div class="col-xs-5">
+            <input type="text" class="form-control" name="phone" id="phone" maxlength="50" placeholder="Phone No.">
+        </div>
+    </div>
+
+	<div class="form-group">
+		<label class="col-xs-3 control-label">Service type<span style="color:red"><strong>*</strong></span> :</label>
+        <div class="col-xs-5">
+            <select multiple="multiple"  class="form-control chzn-select" name="service_type[]" id="editservice_type" data-placeholder="Select Service type">
+                <?php 
+                    foreach($this->batchList as $list){ 
+                    ?>
+                        <option   value="<?php echo $list['service_id']; ?>"><?php echo $list['service']; ?></option>
+                    <?php }
+                ?>
+            </select>
+        </div>
+	</div>	
+	<div class="form-group">
+        <label class="col-xs-3 control-label">Service Date<span style="color:red"><strong>*</strong></span> :</label>
+        <div class="col-xs-5">
+            <input type="date" class="form-control" name="service_date" id="service_date"  placeholder="Service Date">
+        </div>
+    </div>
+	
+    <!-- <div class="form-group">
+        <label class="col-xs-3 control-label">AMC Date<span style="color:red"><strong>*</strong></span> :</label>
+        <div class="col-xs-5">
+            <input type="date" class="form-control" name="amc_date" id="amc_date"  placeholder="AMC Date">
+        </div>
+    </div> -->
+
+    <div class="form-group">
+        <label class="col-xs-3 control-label">GST No.<span style="color:red"><strong>*</strong></span> :</label>
+        <div class="col-xs-5">
+            <input type="text" class="form-control" name="gst_no" id="gst_no" maxlength="50" placeholder="GST No.">
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <div class="col-xs-5 col-xs-offset-3">
+            <button type="submit" class="btn btn-default">Save</button>
+        </div>
+    </div>
+</form><!-- end of edit form -->
+
+
+<script>
+
+var select, chosen, chzn;
+// cache the select element as we'll be using it a few times
+select = $(".chzn-select");
+// init the chosen plugin
+select.chosen({ no_results_text: 'Press Enter to add new entry:' });
+// get the chosen object
+chosen = select.data('chzn');
+    $(".chzn-search").find("input").on( "keyup", function (e)
+    {
+        var test =  $(this).val();
+        var stroke ;
+        stroke = (_ref = e.which) != null ? _ref : e.keyCode;
+        if (stroke == 13)
+        {
+            $.ajax({
+                    type: 'POST',
+                    url: '<?php echo $this->url(array('module'=>'default', 'controller' => 'client', 'action' => 'addnew'));?>',
+                    data: {'business': test},
+            }).success(function (response) {
+                var result = $.parseJSON(response);
+                var optionselect = $('<option value="' + result.businessId + " | " + result.business_type + '" ' + '></option>').text(result.business_type).prop('selected', true);
+                // console.log(optionselect);
+                        $('#business_type').append(optionselect).prop('selected', true).trigger("liszt:updated");  
+                    
+            });
+        }
+    });
+
+///**************service type add  ****************** */
+        var select, chosen, chzn;
+        // cache the select element as we'll be using it a few times
+        select = $(".chzn-select");
+        select.chosen({ no_results_text: 'Press Enter to add new entry:' });
+        chosen = select.data('chzn');
+        $(".search-field").find("input").on( "keyup", function (e)
+        {
+            var example =  $(this).val();
+            console.log(example);
+            var stroke ;
+            stroke = (_ref = e.which) != null ? _ref : e.keyCode;
+            console.log(stroke);
+            if (stroke == 13)
+            {
+                // alert(example);
+                $.ajax({
+                    type: 'POST',
+                    url: '<?php echo $this->url(array('module'=>'default', 'controller' => 'client', 'action' => 'addnewservice'));?>',
+                    data: {'service': example},
+                }).success(function (response) {
+                    var r = $.parseJSON(response);
+                    console.log(r);
+                    var optionservice = $('<option value="' + r.serviceId + " | " + r.service_type + '" ' + '></option>').text(r.service_type);
+                        $('#service_type').append(optionservice).prop('selected', true).trigger("liszt:updated");    
+                        $('#service_type').val(r.serviceId + " | " + r.service_type).trigger("liszt:updated").prop('selected', true);
+                        return ;        
+                });
+            }
+        });
+
+ </script>
+
+<script type="text/javascript">
+    //--------- Edit Status Script ------//
+		$("#example").on("click", '.btn-mini.btn-success.btn-flat,.btn-mini.btn-danger.btn-flat', function(e) {
+        e.preventDefault();
+        $.blockUI({
+            css: {
+                border: 'none',
+                padding: '5px',
+                backgroundColor: '#000',
+                '-webkit-border-radius': '10px',
+                '-moz-border-radius': '10px',
+                opacity: .5,
+                color: '#fff'
+            }
+        });
+
+        var aid = $(this).attr('id');
+        var sts = $(this).attr('sts');
+        $.ajax({
+            type: "POST",
+            url: "<?=$this->url(array('module'=>'default', 'controller' => 'client', 'action' => 'editstatus'));?>",
+            data: "sts=" + sts + "&client_id=" + aid,
+            success: function (result) {
+                var Rec_Data = result.split(",");
+                if (Rec_Data[0] == 'red') {
+                    $('#' + aid + '').removeClass().addClass("btn-mini btn-danger btn-flat");
+                    $('#' + aid + '').attr('sts', Rec_Data[1]);
+                    setTimeout($.unblockUI, 100);
+                }
+                else {
+                    $('#' + aid + '').removeClass().addClass("btn-mini btn-success btn-flat");
+                    $('#' + aid + '').attr('sts', Rec_Data[1]);
+                    setTimeout($.unblockUI, 100);
+                }
+            }
+        });
+    });//--------- End Edit Status Script ------//
+
+    $(document).ready(function () {   
+        // Initializing dynamic datatable   
+
+        var oTable = $('#example').DataTable({
+        	"processing": true,
+            "serverSide": true,
+            
+            // "bRetrieve": true,
+            // "bDestroy": true,
+            // "aLengthMenu": [[10, 25, 50, 75, -1], [10, 25, 50, 75, "All"]],
+            "iDisplayLength": 10,
+        //    "order": [[ 0, 'desc' ]],
+            // dom: 'lBfrtip',
+            // "responsive": {
+            //     details: {
+            //         type: 'column'
+            //     }
+            // },
+            // "columnDefs": [ {
+            //     className: 'control',
+            //     orderable: false,
+            //     targets:   0
+            // } ],
+            // buttons: [
+            //     {
+            //         extend: 'copyHtml5',
+            //         exportOptions: { columns: [ 0, 1, 2, 3, 4, 5, 6, 7]
+            //         }
+            //     },
+            //     {
+            //         extend: 'pdfHtml5',
+            //         exportOptions: {
+            //             columns: [ 0, 1, 2, 3, 4, 5, 6, 7]
+            //         }
+            //     },
+            //     {
+            //         extend: 'print',
+            //         exportOptions: {
+            //             columns: [ 0, 1, 2, 3, 4, 5, 6, 7]
+            //         }
+            //     },
+            //     {
+            //         extend: 'excel',
+            //         exportOptions: {
+            //             columns: [ 0, 1, 2, 3, 4, 5, 6, 7]
+            //         }
+            //     }
+            // ],
+            "ajax": {
+                url: '<?php echo $this->url(array('module'=>'default', 'controller' => 'client', 'action' => 'loadrecord'));?>', // json datasource
+                type: "post",
+                error: function (response) {  // error handling
+                    // console.log(response);
+                    $(".employee-grid-error").html("");
+                    $("#example").append('<tbody class="employee-grid-error"><tr><th colspan="3">No data found in the server</th></tr></tbody>');
+                    $("#employee-grid_processing").css("display", "none");
+                }
+            }
+        });
+        // End Initializing dynamic datatable
+        // $('#example_wrapper .dataTables_filter input').addClass("m-wrap medium"); // modify table search input
+        // $('#example_wrapper .dataTables_length select').addClass("m-wrap xsmall"); // modify table per page dropdown
+        
+        // Add chosen class to select boxes.
+        $('.chzn-select').chosen();
+        // End add chosen class to select boxes.
+
+        // Get the data for Dropdown elements for add form                   
+		  var json = {paym:<?=$this->batchList?>};
+        for (var i = 0; i < json.paym.length; i++) {
+            var option2 = $('<option value="' + json.paym[i]['service_id'] + " | " + json.paym[i]['service'] + '" ' + '></option>').text(json.paym[i]['service']);
+            $('#service_type').append(option2);
+        } 		
+		  var json = {paym:<?=$this->batchList2?>};
+        for (var i = 0; i < json.paym.length; i++) {
+            var option2 = $('<option value="' + json.paym[i]['business_id'] + " | " + json.paym[i]['business'] + '" ' + '></option>').text(json.paym[i]['business']);
+            $('#business_type').append(option2);
+        }
+        //-------------------------------------------------------
+        // Get the data for Dropdown elements for edit form 
+         var json = {paym:<?=$this->batchList?>};
+        for (var i = 0; i < json.paym.length; i++) {
+            var option2 = $('<option value="' + json.paym[i]['service_id']  + '" ' + '></option>').text(json.paym[i]['service']);
+            $('#editservice_type').append(option2);
+        }		
+		  var json = {paym:<?=$this->batchList2?>};
+         for (var i = 0; i < json.paym.length; i++) {
+            var option2 = $('<option value="' + json.paym[i]['business_id'] + " | " + json.paym[i]['business'] + '" ' + '></option>').text(json.paym[i]['business']);
+            $('#editbusiness_type').append(option2);
+        }   
+            
+
+        /**     * Show Form after clicking add new*      * */
+        $("#AddButton").on('click', function () {
+            $(".chzn-select").val('').trigger("liszt:updated");
+            document.getElementById("Form").reset();
+                /**************** Bootbox MODAL Dialog***************************/
+            bootbox
+                .dialog({
+                    title: 'Add New Client',
+                    message: $('#Form'),
+                    show: false // We will show it manually later
+                })
+                .on('shown.bs.modal', function () {
+                    $('#Form')
+                        .show();                             // Show the login form
+                })
+                .on('hide.bs.modal', function (e) {
+                    $('#Form').hide().appendTo('body');
+                })
+                .modal('show');
+        }); // end  Show Form after clicking add new
+       
+        
+        $('#Form').on('submit', function (e) {  
+            // Save the form data via an Ajax request
+            e.preventDefault();
+            // alert($('#service_type').val());
+
+
+
+
+
+
+
+
+
+            
+                      
+            $('button[type="submit"]').prop('disabled', true);
+            var $form = $(e.target);
+            // console.log($form);
+            $.ajax({
+                type: 'POST',
+                url: '<?php echo $this->url(array('module'=>'default', 'controller' => 'client', 'action' => 'save'));?>',
+                data: $form.serialize()
+            }).success(function (response) {
+                var obj = $.parseJSON(response);
+
+                if (obj.msg) {                    
+                    $('button[type="submit"]').prop('disabled', false);
+                    // $('#Form').find('[name="alertmsg"]').val(response.msg).end()
+                    $('#alertmsg').html(obj.msg).css('color', 'red');           
+                    return;
+                }else if(obj.mssg){
+                    $('button[type="submit"]').prop('disabled', false);
+                    // $('#Form').find('[name="alertmsg"]').val(response.msg).end()
+                    $('#alertnamemsg').html(obj.mssg).css('color', 'red');           
+                    return;
+                }else{
+                    $('#example tbody tr:eq(0)').before('<tr role="row" style="text-align:center;"><td class="sorting_1"><span style="color:red">New</span></td><td>' + obj.client_name + '</td><td>' + obj.business_type + '</td><td>' + obj.phone + '</td><td>' + obj.service_type + '</td><td>' + obj.service_date + '</td><td>' + obj.gst_no + '</td><td style="text-align:center;"><a class="btn-mini btn-success btn-flat" sts="0" id="' + obj.cID + '"><i class="fa fa-align"></i></a></td><td style="text-align:center;">' + '<div class="btn-group"><button type="button" class="btn-mini btn-warning btn-flat dropdown-toggle" data-toggle="dropdown"><span class="caret"></span><span class="sr-only"></span></button><ul class="dropdown-menu" role="menu"><li class="divider"></li><li><a href="javascript:;" class="edit" u="' + obj.cID + '"><i class="fa fa-fw fa-edit"></i>Edit Record</a></li><li><a href=javascript:;"class="bttn" u="' + obj.cID + '"><i class="fa fa-fw fa-edit"></i>Mange Record</a></li> <li><a href="javascript:;" class="delete" uid="' + obj.cID + '"><i class="fa fa-fw fa-trash-o"></i>Delete Record</a></li><li class="divider"></li></ul></div>' + '</td></tr>');
+                    // Hide the dialog
+                    $form.parents('.bootbox').modal('hide');
+                    $('button[type="submit"]').prop('disabled', false);
+                    bootbox.alert('Records has been Inserted Successfully', function () {
+                    window.location.reload();
+                    });
+                }
+            });
+        });
+        /*****************************************************  End  ************************************************/
+
+       $('#example').on('click', 'a.edit', function() {			
+            // Get the record's ID via attribute
+            var id = $(this).attr('u');
+            
+             /**************** Bootbox MODAL Dialog***************************/
+            bootbox
+                .dialog({
+                    title: 'Edit Client Details',
+                    message: $('#editForm'),
+                    show: false // We will show it manually later
+                })
+                .on('shown.bs.modal', function () {
+                    $('#editForm')
+                        .show();       // Show the login form
+                })
+                .on('hide.bs.modal', function (e) {
+                    $('#editForm').hide().appendTo('body');
+                })
+                .modal('show');
+            $.ajax({
+                url: '<?php echo $this->url(array('module'=>'default', 'controller' => 'client', 'action' => 'editform'));?>',
+                data: {'id': id},
+                type: 'GET'                
+            }).success(function (response) {
+                // console.log(response);
+                var response = $.parseJSON(response);
+                // Populate the form fields with the data returned from server
+				var array = response.serviceId.split(',');
+				// alert(array);
+                $('#editForm')
+                    .find('[name="editForm_id"]').val(response.id).end()
+                    .find('[name="client"]').val(response.client).end()
+                    .find('[name="business_type"]').val(response.businessId + " | " + response.business_type).trigger("liszt:updated").end()
+                    .find('[name="phone"]').val(response.phone).end()                   
+                    .find('[name="service_date"]').val(response.service_date).end()                   
+                    .find('[name="service_type[]"]').val(array).trigger("liszt:updated").end()                    
+                    // .find('[name="amc_date"]').val(response.amc_date).end()
+                    .find('[name="gst_no"]').val(response.gst_no).end();
+            });
+        });
+        /**************************End*********************/
+
+        /******************************************************
+         ***********************Edit form start***************
+         *****************************************************/       
+        $('#editForm').on('submit', function (e) {     
+            // Save the form data via an Ajax request
+            e.preventDefault();
+            $('button[type="submit"]').prop('disabled', true);
+            var $form = $(e.target);
+            
+            $.ajax({
+                type: 'POST',
+                url: '<?php echo $this->url(array('module'=>'default', 'controller' => 'client', 'action' => 'saveedit'));?>',
+                data: $form.serialize()
+            }).success(function (response) {
+                var response = $.parseJSON(response);
+                $('button[type="submit"]').prop('disabled', false);
+
+                // Get the cells
+                var $a = $('a[u="' + response.id + '"]'),
+                    $tr = $a.closest('tr'),
+                    $cells = $tr.find('td');
+                // Update the cell data
+                $cells.eq(0).html(response.editForm_id).end()
+                $cells.eq(1).html(response.client_name).end()
+                $cells.eq(2).html(response.business_type).end()
+                $cells.eq(3).html(response.phone).end()
+                $cells.eq(4).html(response.service_type).end()
+                $cells.eq(5).html(response.service_date).end()
+                // $cells.eq(6).html(response.amc_date).end()
+                $cells.eq(6).html(response.gst_date).end()
+                
+                // Hide the dialog
+                $form.parents('.bootbox').modal('hide');
+                window.location.reload();
+                bootbox.alert('Records has been Updated Successfully', function () {
+                });
+            });
+        });                   
+    /*-------------delete action----------------------------*/
+        $('#example').on('click', 'a.delete', function() {
+            if (!confirm("Are you sure to delete?")) return false;
+            var r = prompt( "Type the word 'DELETE' to delete");
+            if (r == 'DELETE') {
+                var tr = $(this).closest('tr')[0];
+                var uid = $(this).attr('uid');
+                $.ajax({
+                    type: "GET",
+                    url: "<?php echo $this->url(array('module'=>'default', 'controller' => 'client', 'action' => 'delete'));?>" + "/client_id/" + uid,
+                    success: function () {
+                        oTable.row(tr).remove().draw(false);
+                    },
+                    error: function () {
+
+                    }
+                });
+            }
+        })
+});
+</script>
+
+  

@@ -1,0 +1,134 @@
+<style>
+/* form{
+	margin: -10px 53px 12px 34px;
+}
+input.form-control{
+	height: 22px;
+    width: 355px; 
+}
+.input-prepend{
+	margin: 8px 23px;
+    width: 402px;
+    /* height: 48px; */
+}
+/* .login-footer a{font-size: 22px;
+    text-align: center;
+    color: #fff;
+    line-height: 54px;
+    }
+	img {
+		margin: 8px 2px 0px 70px
+	}
+	button.btn{
+		width: 80px;
+		height: 31px;
+		font-size: 18px;
+		border-radius: 0px;
+		margin-top: 14px;
+	}
+	.discover-service 
+	{
+		border: solid 2px #FFFF99;
+		padding: 25px;
+	}
+	.support {
+    border: solid 2px #FFFF99;
+    padding: 25px;
+    margin-top: 15px;
+    font-size: 16px;
+} */
+/* .discover-service ul li{color: white;
+	list-style: none;
+    display: inline-block;
+    margin-right: 13px;
+    font-size: 18px;
+    line-height: 25px;}
+.support ul li{color: white; list-style: none;}
+.support ul a {
+    color: #FFFFFF;
+    line-height: 30px;
+    margin-top: 10px;
+} */ 
+	</style>
+<?php
+$Session = new Zend_Session_Namespace("ZSN");
+?>
+	<div id="exp" style="display:none"><?=$Session->expired?></div>
+		<form  id="user" class="form-horizontal" enctype="application/x-www-form-urlencoded" action="<?php echo $this->url(array('module'=>'default','controller'=>'Index','action'=>'login'),null,true);?>" method="post" autocomplete="on">
+
+			<fieldset>
+										
+				<div class="input-prepend">
+					<p>Username</p>
+					<input type="text" class="form-control" id="username" value="<?php if(isset($Session->UName)){ echo $this->escape($Session->UName);} ?>" name="Db_Un" maxlength="100" required>
+				</div>
+				<div class="clearfix"></div>
+
+				<div class="input-prepend">
+					<p>Password</p>
+					<input type="password" class="form-control" id="password" name="Db_Pw" maxlength="50" required>
+				</div>
+				<div class="clearfix"></div>
+													
+				<div class="form-group">
+							
+					<div class="input-prepend">
+					<p>Enter Captcha Code</p>
+						<input type="text" class="form-control" id="captcha"  name="captcha" maxlength="6" required autocomplete="off">
+					</div>
+					<div class="col-md-3">
+						<img id="captcha_code" src="<?php echo $this->url(array('module'=>'default','controller'=>'index','action'=>'captcha'),NULL,TRUE);?>" />
+						<small><a href="javascript:;" id="refresh_captcha" ><i class="icon-repeat"></i>Reload</a></small>
+					</div>
+				</div>									
+				<div class="clearfix"></div>
+
+				<p class="center span5">
+				<button type="submit" class="btn btn-primary">Login</button>
+				</p>
+			</fieldset>
+		</form>
+
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+<script type="text/javascript">
+	$("#refresh_captcha").click(function () {
+		const randNo = Math.random()*100+1
+                $("#captcha_code").attr("src","<?php echo 
+                	$this->url(array('module' => 'default', 'controller' => 'index', 'action' => 'captcha'),NULL,TRUE);?>/id/"+randNo);
+                return false;
+            });
+
+$("#user").validate({
+                
+                rules: {
+                	captcha : {
+                        required : true,
+                        remote : "<?php echo $this->url(array('module' => 'default', 'controller' => 'index', 'action' => 'checkcaptcha'),NULL,TRUE);?>"
+                    }
+
+                },
+                 messages: {
+                   
+                    captcha : {
+                        required : "Please enter captcha code.",
+                        remote : "Correct captcha is required."
+                    }
+                },
+            });
+	//document.write(Math.round((new Date().setFullYear(new Date().getFullYear()+1))/1000))
+/*$("#user .btn-primary").live("click", function(e){
+	e.preventDefault;
+	if($("#username").val() == ''){
+		bootbox.alert("Please Enter User Name!!");
+		$("#username").focus();
+		return false;
+	}
+	if($("#password").val() == ''){
+		bootbox.alert("Please Enter Password!!");
+		return false;
+	}
+	
+	return true;
+});*/
+</script>
+<?php unset($Session->expired);?>

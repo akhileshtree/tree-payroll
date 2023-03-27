@@ -1,0 +1,304 @@
+<style>
+
+td i{font-size: 16px; margin: 0px 5px;}
+</style>
+
+
+  <!-- Main content -->
+<div class="main-content" id="panel">
+   
+    <!-- Header -->
+  <div class="header bg-primary pb-6">
+    <div class="container-fluid">
+      <div class="header-body">
+        <div class="row align-items-center py-4">
+          <div class="col-lg-6 col-7">
+            <h6 class="h2 text-white d-inline-block mb-0"><?= $this->escape($this->pageheader); ?></h6>
+          </div>
+          <div class="col-lg-6 col-5 text-right">
+          <button type="button" class="btn btn-sm btn-neutral" data-toggle="modal" data-target="#bd-example-modal-lg">Add Department</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    <!-- Header -->
+
+      <!-- Page content -->
+  <div class="container-fluid mt--6">
+
+  
+      <!-- Add Employee Form Model -->
+    <div class="modal fade" id="bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="card mb-4">
+              <!-- Card header -->
+            <div class="card-header">
+                <h2 class="mb-0">Add Department </h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div><!-- Card header -->
+              
+              <!-- Card body -->
+            <div class="card-body">
+                <!-- Add Employee Form groups used in grid -->
+              <form id="Form" class="needs-validation" >
+                <div class="form-row">
+                  <div class="col-md-6 mb-6">
+                      <label class="form-control-label" for="departmentname">Department Name</label>
+                      <input type="text" class="form-control" name="departmentname" id="departmentname" placeholder="Enter Department Name" required>     
+                  </div>
+
+                  <div class="col-md-6 mb-6">
+                      <label class="form-control-label" for="departmentnote">Note</label>
+                      <input type="text" class="form-control" name="departmentnote" id="departmentnote" placeholder="Enter Note" >
+                  </div>
+
+                </div>
+                <button class="btn btn-primary" type="submit">Submit form</button><!-- Submit Button -->
+              </form>
+                <!-- Add Employee Form groups used in grid -->
+            </div><!-- Card body -->
+          </div>
+        </div>
+      </div>
+    </div>
+      <!-- Add Employee Form Model -->
+
+      <!-- Edit Employee Form Model -->
+    <div class="modal fade" id="edit_bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="card mb-4">
+              <!-- Card header -->
+            <div class="card-header">
+                <h2 class="mb-0">Edit Department </h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div><!-- Card header -->
+              
+              <!-- Card body -->
+            <div class="card-body">
+                <!-- Add Employee Form groups used in grid -->
+              <form id="editform" class="needs-validation">                      
+                <input type="hidden"  name="department_id">
+                  <div class="form-row">
+
+                    <div class="col-md-5 mb-3">
+                        <label class="form-control-label" for="departmentname">Department Name</label>
+                        <input type="text" class="form-control" name="departmentname" id="editdepartmentname" placeholder="Enter Department Name" required>     
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label class="form-control-label" for="departmentnote">Note</label>
+                        <input type="text" class="form-control" name="departmentnote" id="editdepartmentnote" placeholder="Enter Note" >
+                    </div>
+                  </div>
+                <button class="btn btn-primary" type="submit">Submit form</button><!-- Submit Button -->                
+              </form>
+                <!-- Add Employee Form groups used in grid -->
+            </div><!-- Card body -->
+          </div>
+        </div>
+      </div>
+    </div><!-- edit Employee Form Model -->
+
+      <!-- Employee table  -->
+    <div class="row">
+      <div class="col">
+        <div class="card">
+            <!-- Card header -->
+          <div class="card-header">
+            <h3 class="mb-0"><?= $this->escape($this->pageheader); ?> Table</h3>
+          </div><!-- Card header -->
+
+          <div class="table-responsive py-4">
+            <table class="table table-flush" id="datatable-buttons">
+                <!-- Table Header -->
+                <thead class="thead-light">
+                <tr>
+                <th>Sno.</th>
+                  <th>Department Name</th>
+                  <th>Note </th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead><!-- Table Header -->            
+
+                <!-- Table Body -->
+                <tbody>
+                  <?php foreach ($this->department as $i=>$res) { ?> 
+                    <tr>
+                      <td><?= $i + 1;?></td>
+                      <td><?=$this->escape($res['department_name']);?></td>
+                      <?php if($res['note'] == ''){ ?>
+                         <td>N/A</td>
+                      <?php  }else{ ?>
+                          <td><?=$this->escape($res['note']);?></td>
+                      <?php } ?>
+                                           
+                    <?php if ($res['status'] == 0) { ?>
+                        <td><a class="btn-mini btn-success btn-flat" sts="<?php echo $res["status"]?>" id="<?php echo $res["depatment_id"] ?>"><i class="fa fa-align"></i></a></td>
+                        <?php  } else { ?>
+                          <td><a class="btn-mini btn-danger btn-flat" sts="<?php echo $res["status"] ?>" id="<?php echo $res["depatment_id"] ?>"><i class="fa fa-align"></i></a></td>
+                          <?php  }  ?>
+
+                      <td> 
+                        <a href="javascript:;"class="delete" uid="<?php echo $res["depatment_id"]; ?>"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                        <a href="javascript:;"  class="edit" data-toggle="modal" data-target="#edit_bd-example-modal-lg" editid="<?php echo $res["depatment_id"]; ?>"><i class="fas fa-edit"></i></a>
+                      </td>
+
+                    </tr>               
+                  <?php } ?>          
+              </tbody> <!-- Table Body -->
+              
+            </table>
+          </div>
+        </div>
+      </div>
+    </div><!-- End Employee table  -->
+  </div><!-- Page content -->
+</div><!-- Main content -->
+ 
+<script src="./assets/js/datatable.js"></script>
+<script type="text/javascript">
+
+
+  $(document).ready(function () {
+          /*  ********************  Submit Form Script *********************  */
+      $('#Form').on('submit', function (e) {
+          // Save the form data via an Ajax request
+        e.preventDefault();
+          $('button[type="submit"]').prop('disabled', true);   
+          var $form = $(e.target);
+            $.ajax({
+                type: 'POST',
+                url: '<?php echo $this->url(array('module'=>'default', 'controller' => 'department', 'action' => 'save'));?>',
+                data: $form.serialize(),
+                success: function(response){
+                  var obj = $.parseJSON(response);
+                  $('button[type="submit"]').prop('disabled', false);
+                  if (obj.result) {
+                    $('#bd-example-modal-lg').hide();
+                    if(obj.result == "Records has been Inserted Successfully !!"){
+                      if (confirm(obj.result)) {
+                        window.location.reload();
+                        } else {
+                          window.location.reload();
+                        }                    
+                  }                 
+                      
+                  }
+                  
+                }
+            });
+      });
+        /*  ********************  Submit Form Script *********************  */
+
+          /*  ********************  Delete Form Script *********************  */
+      $('#datatable-buttons').on('click', 'a.delete', function() {
+        if (!confirm("Are you sure to delete?")) return false;
+        var r = prompt( "Type the word 'DELETE' to delete");
+        if (r == 'DELETE') {
+          var tr = $(this).closest('tr')[0];
+          var uid = $(this).attr('uid');
+          // console.log(tr);
+          $.ajax({
+              type: "GET",
+              url: "<?php echo $this->url(array('module'=>'default', 'controller' => 'department', 'action' => 'delete'));?>" ,
+              data: {'id' :uid },
+              success: function () {
+                // $('#datatable-buttons').row(tr).remove().draw(false);
+                $(tr).remove(); 
+              },
+              error: function () {
+              }
+          });
+        }
+      })
+        /*  ********************  Delete Form Script *********************  */
+
+        /*  ********************  Edit Form Script *********************  */
+      $('#datatable-buttons').on('click', 'a.edit', function() {			
+          // Get the record's ID via attribute
+          var id = $(this).attr('editid');
+          $.ajax({
+              url: '<?php echo $this->url(array('module'=>'default', 'controller' => 'department', 'action' => 'editform'));?>',
+              data: {'department_id': id},
+              type: 'GET' ,
+              success: function(response){
+                var response = $.parseJSON(response);
+                  // Populate the form fields with the data returned from server
+                $('#editform')                  
+                  .find('[name="department_id"]').val(response.depatment_id).end()
+                  .find('[name="departmentname"]').val(response.department_name).end()
+                  .find('[name="departmentnote"]').val(response.note).end();                  
+              }  
+          });
+      }) //Edit form View Script
+
+        // *********  Edit Form Submit Script **********
+      $('#editform').on('submit', function (e) {     // Save the form data via an Ajax request
+          e.preventDefault();
+          var $form = $(e.target);
+          $('#edit_bd-example-modal-lg').hide();
+          $('button[type="submit"]').prop('disabled', true);
+          $.ajax({
+              type: 'POST',
+              url: '<?php echo $this->url(array('module'=>'default', 'controller' => 'department', 'action' => 'submiteditedform'));?>',
+              data: $form.serialize(),
+              success: function(response){
+                var obj = $.parseJSON(response);
+                
+                if (obj.result) {
+                  $('button[type="submit"]').prop('disabled', true);
+                  $('#edit_bd-example-modal-lg').hide();
+                  // $('#editbd-example-modal-lg').hide();
+                  var $a = $('a[u="' + response.id + '"]'),
+                  $tr = $a.closest('tr'),
+                  $cells = $tr.find('td');
+                    // Update the cell data
+                    $cells.eq(0).html(response.editForm_id).end()
+                    $cells.eq(1).html(response.departmentname).end()
+                    $cells.eq(2).html(response.note).end();
+                  if(obj.result == "Records has been Updated Successfully !!"){
+                    if (confirm(obj.result)) {
+                      window.location.reload();
+                      } else { window.location.reload();}                    
+                  }  
+                }
+              }
+          });
+      });   
+        /*  ********************  Edit Form Script *********************  */
+
+      $("#datatable-buttons").on("click", 'a.btn-mini', function(e) {
+        e.preventDefault();       
+        var aid = $(this).attr('id');
+        var sts = $(this).attr('sts');
+        $.ajax({
+            type: "POST",
+            url: "<?=$this->url(array('module'=>'default', 'controller' => 'department', 'action' => 'editstatus'));?>",
+            data: "sts=" + sts + "&department_id=" + aid,
+            success: function (result) {
+                var Rec_Data = result.split(",");
+                if (Rec_Data[0] == 'red') {
+                    $('#' + aid + '').removeClass().addClass("btn-mini btn-danger btn-flat");
+                    $('#' + aid + '').attr('sts', Rec_Data[1]);
+                    setTimeout($.unblockUI, 100);
+                }
+                else {
+                    $('#' + aid + '').removeClass().addClass("btn-mini btn-success btn-flat");
+                    $('#' + aid + '').attr('sts', Rec_Data[1]);
+                    setTimeout($.unblockUI, 100);
+                }
+            }
+        });
+      });//--------- End Edit Status Script ------//
+        
+  })
+</script>
+

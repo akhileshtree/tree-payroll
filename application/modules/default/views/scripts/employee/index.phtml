@@ -1,0 +1,871 @@
+<style>
+  .invalid-feedbackacc { font-size: 80%; display: none; width: 100%; margin-top: 0.25rem; color: #fb6340;}
+  .invalid-feedback1 {font-size: 80%; display: none; width: 100%; margin-top: 0.25rem; color: #fb6340;}
+  .invalid-feedback2 {font-size: 80%;display: none;width: 100%;margin-top: 0.25rem;color: #fb6340;}
+  .pic_text{font-size: .875rem;text-align: center;  }
+  .picture-container{position: relative; cursor: pointer;text-align: center;}
+  .picture{width: 142px; height: 129px; background-color: #999999;  border: 4px solid #CCCCCC; color: #FFFFFF; border-radius: 50%; margin: 9px 57px; overflow: hidden;transition: all 0.2s; -webkit-transition: all 0.2s;}
+  .picture:hover{border-color: #2ca8ff;}
+  .content.ct-wizard-green .picture:hover{border-color: #05ae0e;}
+  .content.ct-wizard-blue .picture:hover{border-color: #3472f7;}
+  .content.ct-wizard-orange .picture:hover{border-color: #ff9500;}
+  .content.ct-wizard-red .picture:hover{border-color: #ff3b30;}
+  .picture input[type="file"] {cursor: pointer;display: block; height: 86%;left: 0;opacity: 0 !important;position: absolute; top: 9px; width: 100%;}
+  .picture-src{width: 100%;}
+  .modal-content {width: 133%;}
+  #bd-example-modal-lg{ padding-left: 0px; padding-right: 43px;}
+  #editbd-example-modal-lg{ padding-left: 0px; padding-right: 43px;} 
+  textarea.form-control{height: calc(1.5em + 1.25rem + 5px);}
+  .form-row h3{padding: 8px 0px; margin-bottom: 19px; border-bottom: 1px solid #00000017;}
+  .card-header{padding: 0.25rem 0.5rem;}
+  .card-header h2{margin-left: 71px;}
+  .card-header .close{margin-top: -10px;   margin-right: 37px;}
+  td i{font-size: 16px; margin: 0px 5px;}
+</style>
+
+
+  <!-- Main content -->
+<div class="main-content" id="panel">
+   
+    <!-- Header -->
+  <div class="header bg-primary pb-6">
+    <div class="container-fluid">
+      <div class="header-body">
+        <div class="row align-items-center py-4">
+          <div class="col-lg-6 col-7">
+            <h6 class="h2 text-white d-inline-block mb-0"><?= $this->escape($this->pageheader); ?></h6>
+          </div>
+          <div class="col-lg-6 col-5 text-right">
+          <button type="button" class="btn btn-sm btn-neutral" data-toggle="modal" data-target="#bd-example-modal-lg">Add New Employee</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    <!-- Header -->
+
+      <!-- Page content -->
+  <div class="container-fluid mt--6">
+  
+      <!-- Add Employee Form Model -->
+    <div class="modal fade" id="bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="card mb-4">
+              <!-- Card header -->
+            <div class="card-header">
+                <h2 class="mb-0">Add Employee Form</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div><!-- Card header -->
+              
+              <!-- Card body -->
+            <div class="card-body">
+                <!-- Add Employee Form groups used in grid -->
+              <form id="Form" class="needs-validation" >
+
+                <div class="alert alert-danger alert-dismissible fade show" role="alert" id="demo"style="display: none;">
+                  <span class="alert-text"></span>
+                </div>
+
+                <div class="form-row">
+                  <hr><h3 class="col-md-12">Employee's Personal Information</h3><hr>
+                
+                  <div class="col-md-3 mb-3">
+                      <div class="picture">
+                          <img src="./images/cImage/userimage.png" class="picture-src" id="wizardPicturePreview" title="">
+                          <input type="file" name="employee_img" id="wizard-picture" class="" onchange="return fileValidation()" required>
+                      </div>
+                        <h6 class="pic_text">Choose Picture</h6>
+                  </div>
+
+                  <div class="col-md-9 mb-3">
+                    <div class="form-row">
+
+                      <div class="col-md-3 mb-3">
+                        <label class="form-control-label" for="customempId">Employee Id</label>
+                        <input type="text" class="form-control" name="emp_id" id="customempId" value="<?php echo $this->EmpId; ?>"  placeholder="Enter Employee Id Number" Readonly required>     
+                      </div>
+
+                      <div class="col-md-3 mb-3">
+                        <label class="form-control-label" for="customcardno">Employee Card No</label>
+                        <input type="text" class="form-control" name="cardno" value="<?php echo $this->cardno; ?>" id="customcardno" maxlength="15" placeholder="Enter Card Number" required Readonly>     
+                      </div>
+
+                      <div class="col-md-3 mb-3">
+                          <label class="form-control-label" for="customname">Employee Name</label>
+                          <input type="text" class="form-control" name="name" id="customname" placeholder="Enter First Name" required maxlength="50">     
+                      </div>                    
+
+                      <div class="col-md-3 mb-3">
+                          <label class="form-control-label" for="Customemail">Email Id</label>
+                          <input type="email" name="email" class="form-control" id="Customemail" placeholder="Enter Email Id" required maxlength="50">
+                          <div class="invalid-feedback1">This Email Id Already Exists.. Please Try Other One</div>
+                      </div>
+
+                      <div class="col-md-3 mb-3">
+                        <label class="form-control-label" for="validationCustom05">Mobile No </label>
+                        <input type="text" name="mobileNo" class="form-control" id="validationCustom05" placeholder="Enter 10 Digit Mobile No"  maxlength="10" onkeypress="return isNumberKey(event)"  required>
+                        <div class="invalid-feedback2">This Number Already Exists.. Please Try Other One</div>
+                      </div> 
+
+                      <div class="col-md-3 mb-3">
+                          <label class="form-control-label" for="Customerdob">Date Of Birth</label>
+                          <input type="date" name="dob" class="form-control" id="Customerdob" placeholder="Enter Date of Birth" required>  
+                          <div class="invalid-feedback">Sorry, Age Should Be More Then 18 </div>                              
+                      </div>
+                    
+
+                      <div class="col-md-3 mb-3">
+                        <label class="form-control-label" for="Customergender">Gender</label>
+                          <select class="form-control" name="gender" id="Customergender" required>
+                            <option value=" ">Select Gender</option>
+                            <option value="M" >Male</option>
+                            <option value="F">Female</option>
+                            <option value="O">Other</option>                            
+                          </select>
+                      </div>
+
+                      <div class="col-md-3 mb-3">
+                        <label class="form-control-label" for="maritalstatus">Marital Status</label>
+                          <select class="form-control" name="maritalstatus" id="maritalstatus">
+                            <option >Select Marital Status</option>
+                            <option value="married" >Married</option>
+                            <option value="single">Single</option>
+                            <option value="Other">Other</option>                            
+                          </select>
+                      </div>
+                        
+
+                    </div>
+                  </div>
+                                 
+                  <div class="col-md-3 mb-3">
+                    <label class="form-control-label" for="address">Address</label>
+                    <textarea class="form-control" name="address" id="address" rows="3" placeholder="Enter Address" required></textarea>
+                  </div>
+
+                  <div class="col-md-3 mb-3">
+                      <label class="form-control-label" for="adharnumber">Adhar Card No.</label>
+                      <input type="text" name="adharnumber" class="form-control" id="adharnumber" placeholder="Enter Adhar No" required maxlength="20">
+                  </div>
+
+                  <div class="col-md-3 mb-3">
+                      <label class="form-control-label" for="panNumber">Pan Card No</label>
+                      <input type="text" name="panNumber" class="form-control" id="panNumber" placeholder="Enter Pan No" required maxlength="20">
+                  </div>
+
+                  <div class="col-md-3 mb-3">
+                        <label class="form-control-label" for="bloodgroup">Blood Group</label>
+                          <select class="form-control" name="bloodgroup" id="bloodgroup">
+                            <option >Select Blood Group </option>
+                            <option value="O+" >O +ve</option>
+                            <option value="O-">O -ve</option>
+                            <option value="AB+">AB +ve</option> 
+                            <option value="AB-">AB +ve</option> 
+                            <option value="A+">A +ve</option> 
+                            <option value="A-">A -ve</option> 
+                            <option value="B+">B +ve</option> 
+                            <option value="B-">B -ve</option>                           
+                          </select>
+                      </div>
+                 
+                </div>
+
+                <div class="form-row">                  
+                  <h3 class="col-md-12">Employee's Work Information</h3>                 
+
+                    <div class="col-md-4 mb-3">
+                      <label class="form-control-label" for="department">Department</label>
+                        <select class="form-control chzn-select" name="department" id="department" required>
+                          <option >Select Department </option>
+                          <?php  foreach ($this->department as $res) { ?>
+                          <option value="<?php echo $res['depatment_id'] ;?>" ><?php echo strtoupper($res['department_name']) ;?></option>                            
+                          <?php } ?>                          
+                        </select>
+                    </div> 
+                    
+                    <div class="col-md-4 mb-3">
+                      <label class="form-control-label" for="designation">Designation</label>
+                      <input type="text" name="designation" class="form-control" id="designation" placeholder="Enter Designation"  maxlength="50" required>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                      <label class="form-control-label" for="salary">Total Salary</label>
+                      <input type="text" name="salary" onkeypress="return isNumberKey(event)" class="form-control" id="salary" placeholder="Enter Monthly Salary (In Numbers)"  maxlength="50" required>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                      <label class="form-control-label" for="worktype">Work Type</label>
+                        <select class="form-control" name="worktype" id="worktype" required>
+                          <option value=" ">Select work type</option>
+                          <option value="part" >Part-time</option>
+                          <option value="ft">Full time</option>
+                          <option value="wfh">Work from home</option>                            
+                        </select>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                      <label class="form-control-label" for="joiningdate">Joining Date</label>
+                      <input type="date" name="joiningdate" class="form-control" id="joiningdate" required>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                      <label class="form-control-label" for="leavingdate">Leaving Date</label>
+                      <input type="date" name="leavingdate" class="form-control" id="leavingdate" >
+                    </div>   
+                </div>
+
+                <div class="form-row"> 
+
+                  <h3 class="col-md-12">Partner/ Parents Details</h3>             
+                                        
+                    <div class="col-md-3 mb-3">
+                      <label class="form-control-label" for="pname">Name</label>
+                      <input type="text" name="pname" class="form-control" id="pname" placeholder="Enter Name"  maxlength="50" >
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                      <label class="form-control-label" for="pnumber">Contect Number</label>
+                      <input type="text" name="pnumber" class="form-control" id="pnumber" placeholder="Enter Mobile Number"  maxlength="10" onkeypress="return isNumberKey(event)">
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                      <label class="form-control-label" for="prelation">Relationship</label>
+                        <select class="form-control" name="prelation" id="prelation">
+                          <option value=" ">Select Relationship</option>
+                          <option value="husband" >Husband</option>
+                          <option value="wife">Wife</option>
+                          <option value="father">Father</option>
+                          <option value="mother">Mother</option>  
+                          <option value="sister">Sister</option>
+                          <option value="brother">Brother</option>                          
+                        </select>
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                      <label class="form-control-label" for="paddress">Address</label>
+                      <textarea name="paddress" class="form-control" id="paddress" rows="3" placeholder="Enter Address"></textarea>
+                    </div>               
+                      
+                </div>
+
+                <div class="form-row"> 
+                  <h3 class="col-md-12">Employee Bank Details</h3>                  
+                    <div class="col-md-4 mb-3">
+                      <label class="form-control-label" for="ifscno">IFSC Number</label>
+                      <input type="text" name="ifscno" class="form-control" id="ifscno" placeholder="Enter IFSC Number" required maxlength="20">
+                      <div class="invalid-feedbackacc">Make Sure You Enter Valid IFSC Code !!</div>
+                    </div> 
+                                        
+                    <div class="col-md-4 mb-3">
+                      <label class="form-control-label" for="bankname">Bank name</label>
+                      <input type="text" name="bankname" class="form-control" id="bankname" placeholder="Enter Bank"  maxlength="50" required readonly>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                      <label class="form-control-label" for="bankaddress">Bank Branch Name</label>
+                      <input type="text" name="bankaddress" class="form-control" id="bankaddress" placeholder="Enter Bank Address"  maxlength="100" required readonly>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                      <label class="form-control-label" for="accnumber">Account Number</label>
+                      <input type="text" name="accnumber" class="form-control" id="accnumber" placeholder="Enter Account Number" onkeypress="return isNumberKey(event)"  maxlength="20" required>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                      <label class="form-control-label" for="accname">Account Name</label>
+                      <input type="text" name="accname" class="form-control" id="accname" placeholder="Enter Account Name" required>
+                    </div>                   
+                      
+                    <div class="col-md-4 mb-3">
+                      <label class="form-control-label" for="acctype">Account Type</label>
+                      <input type="text" name="acctype" class="form-control" id="acctype" placeholder="Enter Account Type" required>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary" type="submit">Submit form</button><!-- Submit Button -->
+              </form>
+                <!-- Add Employee Form groups used in grid -->
+            </div><!-- Card body -->
+          </div>
+        </div>
+      </div>
+    </div>
+      <!-- Add Employee Form Model -->
+
+      <!-- Edit Employee Form Model -->
+    <div class="modal fade" id="edit_bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="card mb-4">
+              <!-- Card header -->
+            <div class="card-header">
+                <h2 class="mb-0">Edit Employees Information's</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div><!-- Card header -->
+              
+              <!-- Card body -->
+            <div class="card-body">
+                <!-- Add Employee Form groups used in grid -->
+              <form id="editform" class="needs-validation">
+                      
+                    <input type="hidden"  name="editid">
+                <div class="form-row">
+                  <hr><h3 class="col-md-12">Employee's Personal Information</h3><hr>
+
+                    <div class="col-md-3 mb-3">
+                        <label class="form-control-label" for="customempId">Employee Id</label>
+                        <input type="text" class="form-control" name="emp_id" id="editcustomempId" placeholder="Enter Employee Id Number" Readonly required>     
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label class="form-control-label" for="customcardno">Employee Card No</label>
+                        <input type="text" class="form-control" name="cardno" id="editcustomcardno" maxlength="15" placeholder="Enter Card Number" required Readonly>     
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label class="form-control-label" for="customname">Employee Name</label>
+                        <input type="text" class="form-control" name="name" id="editcustomname" placeholder="Enter First Name" required maxlength="50">     
+                    </div>                    
+
+                    <div class="col-md-3 mb-3">
+                        <label class="form-control-label" for="Customemail">Email Id</label>
+                        <input type="email" name="email" class="form-control" id="editCustomemail" placeholder="Enter Email Id" required maxlength="50">
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                      <label class="form-control-label" for="validationCustom05">Mobile No </label>
+                      <input type="text" name="mobileNo" class="form-control" id="editvalidationCustom06" placeholder="Enter 10 Digit Mobile No"  maxlength="10" onkeypress="return isNumberKey(event)"  required>
+                    </div> 
+
+                    <div class="col-md-3 mb-3">
+                        <label class="form-control-label" for="Customerdob">Date Of Birth</label>
+                        <input type="date" name="dob" class="form-control" id="editCustomerdob" placeholder="Enter Date of Birth" required>                                
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                      <label class="form-control-label" for="Customergender">Gender</label>
+                        <select class="form-control" name="gender" id="editCustomergender" required>
+                          <option value=" ">Select Gender</option>
+                          <option value="M" >Male</option>
+                          <option value="F">Female</option>
+                          <option value="O">Other</option>                            
+                        </select>
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                      <label class="form-control-label" for="maritalstatus">Marital Status</label>
+                        <select class="form-control" name="maritalstatus" id="editmaritalstatus">
+                          <option >Select Marital Status</option>
+                          <option value="married" >Married</option>
+                          <option value="single">Single</option>
+                          <option value="Other">Other</option>                            
+                        </select>
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                      <label class="form-control-label" for="address">Address</label>
+                      <textarea class="form-control" name="address" id="editaddress" rows="3" placeholder="Enter Address" required></textarea>
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                      <label class="form-control-label" for="adharnumber">Adhar Card No.</label>
+                      <input type="text" name="adharnumber" class="form-control" id="adharnumber" placeholder="Enter Adhar No" required maxlength="20">
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label class="form-control-label" for="panNumber">Pan Card No</label>
+                        <input type="text" name="panNumber" class="form-control" id="panNumber" placeholder="Enter Pan No" required maxlength="20">
+                    </div>
+
+                      <div class="col-md-3 mb-3">
+                        <label class="form-control-label" for="maritalstatus">Blood Group</label>
+                          <select class="form-control" name="bloodgroup" id="editblood">
+                            <option >Select Blood Group </option>
+                            <option value="O+" >O +ve</option>
+                            <option value="O-">O -ve</option>
+                            <option value="AB+">AB +ve</option> 
+                            <option value="AB-">AB +ve</option> 
+                            <option value="A+">A +ve</option> 
+                            <option value="A-">A -ve</option> 
+                            <option value="B+">B +ve</option> 
+                            <option value="B-">B -ve</option>                           
+                          </select>
+                      </div>
+
+                </div>
+
+                <div class="form-row">                  
+                  <h3 class="col-md-12">Employee's Work Information</h3>                 
+
+                    <div class="col-md-4 mb-3">
+                      <label class="form-control-label" for="department">Department</label>
+                        <select class="form-control" name="department" id="editdepartment" required>
+                          <option >Select Department </option>
+                          <?php  foreach ($this->department as $res) { ?>
+                          <option value="<?php echo $res['depatment_id'] ;?>" ><?php echo strtoupper($res['department_name']) ;?></option>                            
+                          <?php } ?>                          
+                        </select>
+                    </div> 
+                    
+                    <div class="col-md-4 mb-3">
+                      <label class="form-control-label" for="designation">Designation</label>
+                      <input type="text" name="designation" class="form-control" id="editdesignation" placeholder="Enter Designation"  maxlength="50" required>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                      <label class="form-control-label" for="salary">Total Salary</label>
+                      <input type="text" name="salary" onkeypress="return isNumberKey(event)" class="form-control" id="editsalary" placeholder="Enter Monthly Salary (In Numbers)"  maxlength="50" required>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                      <label class="form-control-label" for="worktype">Work Type</label>
+                        <select class="form-control" name="worktype" id="editworktype" required>
+                          <option value=" ">Select work type</option>
+                          <option value="part" >Part-time</option>
+                          <option value="ft">Full time</option>
+                          <option value="wfh">work from home</option>                            
+                        </select>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                      <label class="form-control-label" for="joiningdate">Joining Date</label>
+                      <input type="date" name="joiningdate" class="form-control" id="editjoiningdate" required>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                      <label class="form-control-label" for="leavingdate">Date of Leaving</label>
+                      <input type="date" name="leavingdate" class="form-control" id="editleavingdate" >
+                    </div>   
+                </div>
+
+                <div class="form-row"> 
+                  <h3 class="col-md-12">Partner/ Parents Details</h3>             
+                                        
+                    <div class="col-md-3 mb-3">
+                      <label class="form-control-label" for="pname">Name</label>
+                      <input type="text" name="pname" class="form-control" id="editpname" placeholder="Enter Name"  maxlength="50" >
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                      <label class="form-control-label" for="pnumber">Contect Number</label>
+                      <input type="text" name="pnumber" class="form-control" id="editpnumber" placeholder="Enter Mobile Number"  maxlength="10" onkeypress="return isNumberKey(event)">
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                      <label class="form-control-label" for="prelation">Relationship</label>
+                        <select class="form-control" name="prelation" id="editprelation">
+                          <option value=" ">Select Relationship</option>
+                          <option value="husband" >Husband</option>
+                          <option value="wife">Wife</option>
+                          <option value="father">Father</option>
+                          <option value="mother">Mother</option>  
+                          <option value="sister">Sister</option>
+                          <option value="brother">Brother</option>                          
+                        </select>
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                      <label class="form-control-label" for="paddress">Address</label>
+                      <textarea name="paddress" class="form-control" id="editpaddress" rows="3" placeholder="Enter Address"></textarea>
+                    </div>                  
+                </div>
+
+                <div class="form-row"> 
+                  <h3 class="col-md-12">Employee Bank Details</h3>             
+                                        
+                    <div class="col-md-4 mb-3">
+                      <label class="form-control-label" for="bankname">Bank name</label>
+                      <input type="text" name="bankname" class="form-control" id="editbankname" placeholder="Enter Bank"  maxlength="50" required>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                      <label class="form-control-label" for="bankaddress">Bank address</label>
+                      <input type="text" name="bankaddress" class="form-control" id="editbankaddress" placeholder="Enter Bank Address"  maxlength="100" required>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                      <label class="form-control-label" for="accnumber">Account Number</label>
+                      <input type="text" name="accnumber" class="form-control" id="editaccnumber" placeholder="Enter Account Number" onkeypress="return isNumberKey(event)"  maxlength="20" required>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                      <label class="form-control-label" for="accname">Account Name</label>
+                      <input type="text" name="accname" class="form-control" id="editaccname" placeholder="Enter Account Name" required>
+                    </div>                    
+
+                    <div class="col-md-4 mb-3">
+                      <label class="form-control-label" for="ifscno">IFSC Number</label>
+                      <input type="text" name="ifscno" class="form-control" id="editifscno" placeholder="Enter IFSC Number" required maxlength="20">
+                    </div>    
+                    
+                    <div class="col-md-4 mb-3">
+                      <label class="form-control-label" for="acctype">Account Type</label>
+                      <input type="text" name="acctype" class="form-control" id="editacctype" placeholder="Enter Account Type" required>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary" type="submit">Submit form</button><!-- Submit Button -->
+                
+              </form>
+                <!-- Add Employee Form groups used in grid -->
+            </div><!-- Card body -->
+          </div>
+        </div>
+      </div>
+    </div><!-- edit Employee Form Model -->
+
+      <!-- Employee table  -->
+    <div class="row">
+      <div class="col">
+        <div class="card">
+            <!-- Card header -->
+          <div class="card-header">
+            <h3 class="mb-0"><?= $this->escape($this->pageheader); ?> Table</h3>
+          </div><!-- Card header -->
+
+          <div class="table-responsive py-4">
+            <table class="table table-flush" id="datatable-buttons">
+                <!-- Table Header -->
+              <thead class="thead-light">
+                <tr>
+                  <th>Sno.</th>
+                  <th>Emp Id</th>
+                  <th>Name</th>                  
+                  <th>Contect no.</th>
+                  <th>Department</th>
+                  <th>Designation</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead><!-- Table Header -->            
+
+                <!-- Table Body -->
+              <tbody>
+                  <?php foreach ($this->emplist as $i=>$res) { ?> 
+                <tr>
+                  <td><?= $i + 1;?></td>
+                  <td><?=$this->escape($res['emp_id']);?> </a> </td>
+                  <td>
+                    <a href="<?= $this->url(array('module' => 'default', 'controller' => 'employeedetails', 'action'=>'index','id' => $res['emp_id']),NULL,TRUE) ?>">
+                    <?=ucwords($this->escape($res['emp_name']));?>
+                    </a>
+                  </td>
+                  <td><?=$this->escape($res['emp_ph_no']);?></td>                    
+                  <td><?= ucwords($this->escape($res['depart_name']));?></td>
+                  <td><?=$this->escape($res['designation']);?></td>
+                    
+                  <?php if($this->escape($res['emp_status']) == 'active'){ ?>
+                    <td>Active</td>
+                  <?php }else{ ?>
+                    <td>Left</td>
+                  <?php  } ?>
+                  <td> <a href="javascript:;"class="delete" uid="<?php echo $res["emp_id"]; ?>" status="<?php echo $res['emp_status']; ?>">
+                       <i class="fa fa-trash" aria-hidden="true"></i></a>
+                      <a href="javascript:;"  class="edit" data-toggle="modal" data-target="#edit_bd-example-modal-lg" editid="<?php echo $res["emp_id"]; ?>">
+                      <i class="fas fa-edit"></i></a>
+                  </td>
+                 
+                </tr>               
+                <?php } ?>          
+              </tbody> <!-- Table Body -->
+              
+            </table>
+          </div>
+        </div>
+      </div>
+    </div><!-- End Employee table  -->
+  </div><!-- Page content -->
+</div><!-- Main content -->
+                
+ 
+<script src="./assets/js/datatable.js"></script>
+<script type="text/javascript">
+
+    /*  **************************************************************
+      Only Number's Validation Function Script For Contect Number's  
+    **************************************************************  */
+  function isNumberKey(evt)
+    {
+      var charCode = (evt.which) ? evt.which : evt.keyCode;
+      if (charCode != 46 && charCode > 31 
+      && (charCode < 48 || charCode > 57))
+      return false;
+      return true;
+    }
+    /*  **************************************************************
+      Only Number's Validation Function Script For Contect Number's  
+    **************************************************************  */
+
+  $(document).ready(function () {
+    $('.chzn-select').chosen();
+          /*  ********************  Submit Form Script *********************  */
+      $('#Form').on('submit', function (e) {
+          // Save the form data via an Ajax request
+        e.preventDefault();
+          $('button[type="submit"]').prop('disabled', true);   
+        var $form = $(e.target);
+          $.ajax({
+              type: 'POST',
+              // dataType : 'json',
+              contentType: false,
+              cache: false,
+              processData:false,
+              url: '<?php echo $this->url(array('module'=>'default', 'controller' => 'employee', 'action' => 'save'));?>',
+              data:  new FormData(this),
+              success: function(response){
+                var obj = $.parseJSON(response);
+                $('button[type="submit"]').prop('disabled', false);
+                if (obj.result) {
+                  $('#bd-example-modal-lg').hide();
+                  if(obj.result == "Records has been Inserted Successfully !!"){
+                    if (confirm(obj.result)) {
+                      window.location.reload();
+                      } else { window.location.reload();}                    
+                  }  
+                }
+              }
+          });
+      });
+        /*  ********************  Submit Form Script *********************  */
+
+          /*  ********************  Delete Form Script *********************  */
+      $('#datatable-buttons').on('click', 'a.delete', function() {
+        if (!confirm("Are you sure to delete?")) return false;
+        var r = prompt( "Type the word 'DELETE' to delete");
+        if (r == 'DELETE') {
+          var tr = $(this).closest('tr')[0];
+          var uid = $(this).attr('uid');
+          var status = $(this).attr('status');
+          // console.log(tr);
+          $.ajax({
+              type: "GET",
+              url: "<?php echo $this->url(array('module'=>'default', 'controller' => 'employee', 'action' => 'delete'));?>" ,
+              data: {'emp_id' :uid, status},
+              success: function () {
+                // $('#datatable-buttons').row(tr).remove().draw(false);
+                $(tr).remove(); 
+              },
+              error: function () {
+              }
+          });
+        }
+      })
+        /*  ********************  Delete Form Script *********************  */
+
+        /*  ********************  Edit Form Script *********************  */
+      $('#datatable-buttons').on('click', 'a.edit', function() {			
+          // Get the record's ID via attribute
+          var id = $(this).attr('editid');
+          $.ajax({
+              url: '<?php echo $this->url(array('module'=>'default', 'controller' => 'employee', 'action' => 'editformview'));?>',
+              data: {'emp_id': id},
+              type: 'GET' ,
+              success: function(response){
+                var response = $.parseJSON(response);
+                  // Populate the form fields with the data returned from server
+                $('#editform')                  
+                  .find('[name="editid"]').val(response.id).end()
+                  .find('[name="emp_id"]').val(response.emp_id).end()
+                  .find('[name="cardno"]').val(response.emp_card_no).end()
+                  .find('[name="name"]').val(response.emp_name).end()
+                  .find('[name="email"]').val(response.emp_email).end()                   
+                  .find('[name="mobileNo"]').val(response.emp_ph_no).end()                   
+                  .find('[name="dob"]').val(response.dob).end() 
+                  .find('[name="gender"]').val(response.gender).end()
+                  .find('[name="maritalstatus"]').val(response.maritalstatus).end()
+                  .find('[name="address"]').val(response.address).end()
+                  .find('[name="department"]').val(response.department).end()
+                  .find('[name="designation"]').val(response.designation).end()                   
+                  .find('[name="salary"]').val(response.salary).end()                   
+                  .find('[name="worktype"]').val(response.worktype).end() 
+                  .find('[name="joiningdate"]').val(response.joiningdate).end()
+                  .find('[name="leavingdate"]').val(response.leavingdate).end()
+                  .find('[name="pname"]').val(response.p_name).end()
+                  .find('[name="pnumber"]').val(response.p_number).end()
+                  .find('[name="prelation"]').val(response.p_relation).end()
+                  .find('[name="paddress"]').val(response.p_address).end()                   
+                  .find('[name="bankname"]').val(response.bankname).end()                   
+                  .find('[name="bankaddress"]').val(response.bankaddress).end() 
+                  .find('[name="accnumber"]').val(response.accnumber).end()
+                  .find('[name="accname"]').val(response.accname).end()
+                  .find('[name="ifscno"]').val(response.ifscno).end()
+                  .find('[name="acctype"]').val(response.acctype).end()
+                  .find('[name="bloodgroup"]').val(response.blood_group).end()
+                  .find('[name="adharnumber"]').val(response.adhar_number).end()
+                  .find('[name="panNumber"]').val(response.pan_number).end();                   
+              }  
+          });
+      }) //Edit form View Script
+
+        // *********  Edit Form Submit Script **********
+      $('#editform').on('submit', function (e) {     // Save the form data via an Ajax request
+          e.preventDefault();
+          $('button[type="submit"]').prop('disabled', true);
+          var $form = $(e.target);
+          $('#editbd-example-modal-lg').hide();
+          $.ajax({
+              type: 'POST',
+              url: '<?php echo $this->url(array('module'=>'default', 'controller' => 'employee', 'action' => 'saveeditform'));?>',
+              data: $form.serialize(),
+              success: function(response){
+                var obj = $.parseJSON(response);
+                $('button[type="submit"]').prop('disabled', false);
+                if (obj.result) {
+                  $('#editbd-example-modal-lg').hide();
+                  var $a = $('a[u="' + response.id + '"]'),
+                  $tr = $a.closest('tr'),
+                  $cells = $tr.find('td');
+                    // Update the cell data
+                    $cells.eq(0).html(response.editForm_id).end()
+                    $cells.eq(1).html(response.emp_id).end()
+                    $cells.eq(2).html(response.name).end()
+                    $cells.eq(3).html(response.mobileNo).end()
+                    $cells.eq(4).html(response.department).end()
+                    $cells.eq(5).html(response.designation).end()
+                    $cells.eq(6).html(response.gst_date).end()
+                  if(obj.result == "Records has been Updated Successfully !!"){
+                    if (confirm(obj.result)) {
+                      window.location.reload();
+                      } else { window.location.reload();}                    
+                  }  
+                }
+              }
+          });
+      });   
+        /*  ********************  Edit Form Script *********************  */
+        
+          /*  **************************************************************
+                      *****  Validation Script  *****
+              **************************************************************  */ 
+      $('#Customerdob').on('input', function(e){
+        var dateofbirth = $(this).val();
+        $.ajax({
+            type: 'POST',
+            url: '<?php echo $this->url(array('module'=>'default', 'controller' => 'employee', 'action' => 'validationdob'));?>',
+            data: {dateofbirth},
+            success: function(response){
+              var obj = $.parseJSON(response); 
+              if(obj.Error){
+                $('.invalid-feedback').show();
+                $('#Customerdob').val('');
+                return false;
+              }else{
+                $('.invalid-feedback').hide();
+              }
+            }
+        });
+        
+      })
+
+      $('#ifscno').on('input', function(e){
+        var ifsccode = $(this).val();
+        $.ajax({
+            type: 'POST',
+            url: '<?php echo $this->url(array('module'=>'default', 'controller' => 'employee', 'action' => 'banckinfo'));?>',
+            data: {ifsccode},
+            success: function(response){
+              var obj = $.parseJSON(response); 
+              if(obj == "Not Found"){
+                $('.invalid-feedbackacc').show();
+                    $('#Form')
+                  .find('[name="bankname"]').val('').end()                   
+                  .find('[name="bankaddress"]').val('').end() ;
+              }else{  
+                $('.invalid-feedbackacc').hide();              
+                $('#Form')
+                  .find('[name="bankname"]').val(obj.BANK).end()                   
+                  .find('[name="bankaddress"]').val(obj.BRANCH).end() ;
+              }
+            }
+        });
+
+      })
+
+      $('#Customemail').on('change', function(e){
+        var Emp_email = $(this).val();
+        $.ajax({
+            type: 'POST',
+            url: '<?php echo $this->url(array('module'=>'default', 'controller' => 'employee', 'action' => 'empevalidation'));?>',
+            data: {'emp_email' : Emp_email},
+            success: function(response){
+              var obj = $.parseJSON(response); 
+              console.log(obj);
+              if(obj.Error){
+                $('.invalid-feedback1').show(); 
+                $('#Form')
+                  .find('[name="email"]').val('').end();     
+              } else{
+                $('.invalid-feedback1').hide();
+              }  
+            }
+        });
+
+      })
+
+      $('#validationCustom05').on('change', function(e){
+        var Emp_no = $(this).val();
+        $.ajax({
+            type: 'POST',
+            url: '<?php echo $this->url(array('module'=>'default', 'controller' => 'employee', 'action' => 'empevalidationno'));?>',
+            data: {'emp_no' : Emp_no},
+            success: function(response){
+              var obj = $.parseJSON(response); 
+              console.log(obj);
+              if(obj.Error){
+                $('.invalid-feedback2').show(); 
+                $('#Form')
+                  .find('[name="mobileNo"]').val('').end();     
+              } else{
+                $('.invalid-feedback2').hide();
+              }  
+            }
+        });
+
+      })
+
+          /*  **************************************************************
+                      *****  End Validation Script  *****
+              **************************************************************  */ 
+
+  })
+</script>
+
+<script>
+    $(document).ready(function(){
+    // Prepare the preview for profile picture
+        $("#wizard-picture").change(function(){
+            readURL(this);
+        });
+    });
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#wizardPicturePreview').attr('src', e.target.result).fadeIn('slow');
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    function fileValidation() {
+        var fileInput = document.getElementById('wizard-picture');
+        var filePath = fileInput.value;         
+        // Allowing file type
+        var allowedExtensions = /(\.png|\.jpg|\.jpeg)$/i;             
+        if (!allowedExtensions.exec(filePath)) {
+            $('#demo').show();
+            $('#demo').html('Sorry, only JPG, JPEG, PNG files are allowed.');
+            fileInput.value = '';
+            return false;
+        }
+        $('#demo').hide();
+    }
+
+</script>
+ 

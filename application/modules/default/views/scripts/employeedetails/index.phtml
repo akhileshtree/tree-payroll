@@ -1,0 +1,526 @@
+
+<div class="site_tabs">
+  <div class="header bg-primary pb-6" style="margin-top: 1px">
+    <div class="container-fluid">
+      <div class="header-body">
+        <div class="row align-items-center py-4">
+          <div class="col-lg-6 col-7">
+            <h6 class="h2 text-white d-inline-block mb-0">Employee Detail's</h6>
+            <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+              <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                <li class="breadcrumb-item"><a href="<?= $this->url(array('module' => 'default', 'controller' => 'employee'), null, true); ?>"><i class="fas fa-home"></i> Home</a></li>
+              </ol>
+            </nav>
+          </div>
+        </div>
+
+        <ul class="main nav nav-tabs" id="myTab">
+          <li class="active">
+              <a data-toggle="tab" href="#firstTab">
+              <div class="card card-stats active">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col">
+                      <span class="h2 font-weight-bold mb-0">Employee Details</span>
+                    </div>
+                    <div class="col-auto">
+                      <div class="icon icon-shape bg-gradient-red text-white rounded-circle shadow">
+                        <i class="ni ni-chart-pie-35"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </a>            
+          </li>
+
+          <li>
+            <a href="#secondTab" aria-controls="2" role="tab" data-toggle="tab">
+              <div class="card card-stats active">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col">
+                      <span class="h2 font-weight-bold mb-0">Salary Details</span>
+                    </div>
+                    <div class="col-auto">
+                      <div class="icon icon-shape bg-gradient-red text-white rounded-circle shadow">
+                      <i class="ni ni-money-coins"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </a>            
+          </li>
+
+          <li>
+            <a href="#thirdTab" aria-controls="3" role="tab" data-toggle="tab">
+              <div class="card card-stats active">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col">
+                      <span class="h2 font-weight-bold mb-0"> Bank Details</span>
+                    </div>
+                    <div class="col-auto">
+                      <div class="icon icon-shape bg-gradient-red text-white rounded-circle shadow">
+                        <i class="ni ni-active-40"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </a>            
+          </li>
+
+          <li>
+            <a href="#forthTab" aria-controls="4" role="tab" data-toggle="tab">
+              <div class="card card-stats active">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col">
+                      <span class="h2 font-weight-bold mb-0"> Attandace Details</span>
+                    </div>
+                    <div class="col-auto">
+                      <div class="icon icon-shape bg-gradient-red text-white rounded-circle shadow">
+                        <i class="ni ni-active-40"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </a>            
+          </li>     
+        </ul> <!---Main tabs ----->  
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-content">
+    <!-- First tab -->
+      <div id="firstTab" class="tab-pane fade in active show"> 
+        <div class="container-fluid mt--6">
+          <div class="row">
+
+            <div class="col-xl-4 order-xl-2">
+              <div class="card card-profile">
+                <div class="row justify-content-center">
+                  <div class="col-lg-3 order-lg-2">
+                    <div class="card-profile-image">
+                      <a href="#">
+                        <img src="<?=$this->baseUrl();?>/images/cImage/<?= $this->emplist['emp_image']; ?>" class="rounded-circle">
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4"></div>
+                <div class="card-body pt-0">
+                  <div class="row">
+                    <div class="col">
+                      <div class="card-profile-stats d-flex justify-content-center emp_detail">
+                        <div>
+                          <?php 
+                            if($this->emplist['leavingdate'] == '0000-00-00'){
+                              $leavingdate = 'Till Now';
+                            }else{
+                              $leavingdate = $this->emplist['leavingdate'];
+                            }
+                          ?>
+                          <span class="heading"><?= date("d-m-Y", strtotime($this->emplist['joiningdate'])); ?>- <?php echo $leavingdate ?></span>
+                          <span class="description"><?= $this->emplist['emp_id']; ?></span>
+                        </div>                
+                      </div>
+                    </div>
+                  </div>
+                  <div class="text-center emp_profile_detail">
+
+                    <h5 class="h3">
+                    <?= strtoupper($this->emplist['emp_name']); ?><span class="font-weight-light"></span>
+                    </h5>
+                    <div class="h5 mt-4">
+                      <i class="ni business_briefcase-24 mr-2"></i><?= strtoupper($this->emplist['depart_name']); ?>
+                    </div>
+                    <div class="h5 font-weight-300">
+                      <i class="ni location_pin mr-2"></i><?= $this->emplist['address']; ?>
+                    </div>
+                    
+                    <div>
+                      
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <!-- Progress track -->
+              
+                <!-- Card header -->
+                <div class="card getaccess">
+                  <!-- Title -->
+                  <div class="row align-items-center">
+                                        
+                      <?php if($this->access['status'] == '0'){
+                        $status = 'Change Password'; ?>
+                          <!-- <div class="col-6">   <h3 class="mb-0">Access </h3> </div> -->
+                            <div class="col-12 text-right">
+                                <button class="btn btn-icon btn-success" id="accessbtn1" type="button">
+                                  <span class="btn-inner-text"><i class="fa fa-key" aria-hidden="true"></i> <?php echo $status ?></span>
+                                </button>
+                            </div>
+                         <?php }else{
+                            $status = 'Get Access'; ?>
+                                <div class="col-12 ">
+                                  <button class="btn btn-icon btn-danger" id="accessbtn" type="button">
+                                    <span class="btn-inner-text"><i class="fa fa-unlock-alt" aria-hidden="true"></i> <?php echo $status ?></span>
+                                  </button>
+                                </div>
+                         <?php } ?> 
+               
+                  <!-- set password form -->
+                  <?php if($this->access['status'] != '0'){ ?>
+                    
+                        <div class="card-body" >
+                          <form id="Form" class="needs-validation">
+                            <input type="hidden" name="userid" value="<?= $this->emplist['emp_id']; ?>">
+                              <div class="form-row">
+
+                                <div class="col-md-12 mb-12 form-group">
+                                  <label class="form-control-label" for="validationCustom04">Password</label>
+                                    <input type="password" name="pwd" class="form-control" id="passowrd" maxlength="10" placeholder="Enter Password" required> 
+                                </div>
+                                  
+                                <div class="col-md-12 mb-12 form-group">
+                                  <label class="form-control-label" for="validationCustom04">Conform Password</label> 
+                                  <input type="password" class="form-control" id="conformpass" placeholder="Enter Password" required> 
+                                    <div id="validatestatus" style="color: red;"></div>      
+                                </div>
+
+                              </div>
+                              
+                            <button class="btn btn-primary changepassbtn" type="submit">Submit</button><!-- Submit Button -->
+                          </form>
+                        </div>
+                  <?php } ?>
+                  </div>
+                </div>
+
+                  <!-- edit password form -->
+                  <?php if($this->access['status'] == '0'){ ?>
+                    <div class="card getaccess" id="getaccesscard" style="display: none;">
+                      <!-- Card body -->
+                      <div class="card-header"></div>
+                        <div class="card-body" style="padding: 2.5rem;">
+                          <div class="row align-items-center" style="margin-top: -27px;">                       
+                              
+                              <form id="editForm" class="needs-validation" style="display: none;">
+                                <input type="hidden" name="userid" value="<?= $this->emplist['emp_id']; ?>">
+                                  <div class="form-row">
+                                  
+                                    <div class="col-md-12 mb-12 form-group">
+                                      <label class="form-control-label" for="validationCustom04">Password</label>
+                                      <input type="password" name="pwd" class="form-control" id="editpassowrd" maxlength="10" placeholder="Enter Password" required>  
+                                    </div>
+                                      
+                                    <div class="col-md-12 mb-12 form-group">
+                                      <label class="form-control-label" for="validationCustom04">Conform Password</label> 
+                                      <input type="password" class="form-control" id="editconformpass" placeholder="Enter Password" required>
+                                      <div id="editvalidatestatus" style="color: red;"></div>      
+                                    </div>
+                                  </div>
+
+                                <button class="btn btn-primary changepassbtn" type="submit">Submit</button><!-- Submit Button -->
+                                <button type="button" id="editcencel" class="btn btn-warning changepassbtn">Cencel</button>
+                              </form>
+
+                          </div>
+                        </div>
+                        
+                    </div>
+                  <?php } ?>
+                 
+                
+            </div>
+
+            <div class="col-xl-8 order-xl-1">
+              <div class="card">
+                <div class="card-header">
+                  <div class="row align-items-center">
+                    <div class="col-12">
+                      <h3 class="heading-small mb-0">Personal information</h3>
+                    </div>           
+                  </div>
+                </div>
+                <div class="card-body">
+                    <div class="pl-lg-4">
+                      <div class="row row-example">
+                        <div class="col-lg-3">
+                          <div class="form-group">
+                            <label class="form-control-label" for="input-email">Employee id</label>
+                            <span><?= $this->emplist['emp_id']; ?></span>
+                          </div>
+                        </div>
+                        <div class="col-lg-2">
+                          <div class="form-group">
+                            <label class="form-control-label" for="input-email">Card-no</label>
+                            <span><?= $this->emplist['emp_card_no']; ?></span>                            
+                          </div>
+                        </div>
+
+                        <div class="col-lg-2">
+                          <div class="form-group">
+                            <?php if($this->emplist['gender'] == 'M'){
+                              $gender = 'Male' ;
+                            }elseif ($this->emplist['gender'] == 'F') {
+                              $gender = 'Female' ;
+                            }else{
+                              $gender = 'Other' ;
+                            }
+                            ?>
+                            <label class="form-control-label" for="input-email">Gender</label>
+                            <span><?= $gender; ?></span>                            
+                          </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                          <div class="form-group">
+                            <label class="form-control-label" for="input-email">Date Of Birth</label>
+                            <span><?= date("d-m-Y", strtotime($this->emplist['dob'])); ?></span> 
+                          </div>
+                        </div>
+                        
+                        <div class="col-lg-4">
+                          <div class="form-group">
+                            <label class="form-control-label" for="input-email">Email Id</label>
+                            <span><?= $this->emplist['emp_email']; ?></span> 
+                          </div>
+                        </div>
+                        
+                        
+                        <div class="col-lg-3">
+                          <div class="form-group">
+                            <label class="form-control-label" for="input-email">Blood Group</label>
+                            <span><?= $this->emplist['blood_group']; ?></span> 
+                          </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                          <div class="form-group">
+                            <label class="form-control-label" for="input-city">Contech Number</label>
+                            <span><?= $this->emplist['emp_ph_no']; ?></span>
+                          </div>
+                        </div>
+                        <div class="col-md-12">
+                          <div class="form-group">
+                            <label class="form-control-label" for="input-address">Address</label>
+                            <span><?= $this->emplist['address']; ?></span>
+                          </div>
+                        </div>          
+                      </div>                      
+                    </div>
+                    <hr class="my-4" />
+                    <!-- Address -->
+                    <h6 class="heading-small text-muted mb-4"> Partner/ Parents Details</h6>
+                    <div class="pl-lg-4">
+                      <div class="row row-example">
+                        <div class="col-md-3">
+                          <div class="form-group">                  
+                            <label class="form-control-label" for="input-address">Marital Status</label>
+                            <span><?= ucwords($this->emplist['maritalstatus']); ?></span>
+                          </div>
+                        </div>
+                        <div class="col-md-3">
+                          <div class="form-group">                  
+                            <label class="form-control-label" for="input-address">Name</label>
+                            <span><?= $this->emplist['p_name']; ?></span>
+                          </div>
+                        </div>
+                        <div class="col-md-3">
+                          <div class="form-group">                  
+                            <label class="form-control-label" for="input-address">Contect Number</label>
+                            <span><?= $this->emplist['p_number']; ?></span>
+                          </div>
+                        </div>
+                        <div class="col-md-3">
+                          <div class="form-group">                  
+                            <label class="form-control-label" for="input-address">Relationship</label>
+                            <span><?= $this->emplist['p_relation']; ?></span>
+                          </div>
+                        </div>
+                        <div class="col-md-12">
+                          <div class="form-group">                  
+                            <label class="form-control-label" for="input-address">Address</label>
+                            <span><?= $this->emplist['p_address']; ?></span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>                    
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    <!-- First tab -->
+
+    <!-- Second tab -->
+    <div role="tabpanel" class="tab-pane" id="secondTab" >
+      <h1>Hello</h1>
+    </div>
+    <!-- second tab -->
+
+    <!-- third tab -->
+    <div role="tabpanel" class="tab-pane" id="thirdTab"> 
+      hello2
+    </div>
+    <!-- third tab -->
+    
+    <!-- forth tab -->
+    <div role="tabpanel" class="tab-pane" id="forthTab"> 
+      hello4
+    </div>
+    <!-- forth tab -->
+    
+  </div>
+</div>
+
+<script type="text/javascript">
+    $('#myTab a').click(function(e) {
+    e.preventDefault();
+    $(this).tab('show');
+    });
+
+    // store the currently selected tab in the hash value
+    $("ul.nav-tabs > li > a").on("shown.bs.tab", function(e) {
+    var id = $(e.target).attr("href").substr(1);
+    window.location.hash = id;
+    });
+
+    // on load of the page: switch to the currently selected tab
+    var hash = window.location.hash;
+    $('#myTab a[href="' + hash + '"]').tab('show');
+
+     //--------------------------
+    //  const togglePassword = document.querySelector('#togglePassword');
+    //   const password = document.querySelector('#passowrd');
+
+    //     togglePassword.addEventListener('click', function (e) {
+    //       // toggle the type attribute
+    //       const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+    //       password.setAttribute('type', type);
+    //       // toggle the eye slash icon
+    //       this.classList.toggle('fa-eye-slash');
+    //     });
+         //--------------------------
+     
+        $('#conformpass').on('keyup', function () {
+          if ($('#passowrd').val() == $('#conformpass').val()) {
+              $('#validatestatus').html('Matching').css('color', 'green');
+              $('button[type="submit"]').show();
+          } else 
+            $('#validatestatus').html('Not Matching').css('color', 'red');
+            $('button[type="submit"]').prop('disabled', false); 
+            
+          return;
+        }); 
+
+        $('#editconformpass').on('keyup', function () {
+          if ($('#editpassowrd').val() == $('#editconformpass').val()) {
+              $('#editvalidatestatus').html('Matching').css('color', 'green');
+              $('button[type="submit"]').show();
+          } else 
+            $('#editvalidatestatus').html('Not Matching').css('color', 'red');
+            $('button[type="submit"]').prop('disabled', false); 
+            // $('button[type="submit"]').hide();
+          return;
+        });
+
+        $(document).ready(function () {
+
+        $('#Form').on('submit', function (e) {
+            // Save the form data via an Ajax request
+          e.preventDefault();
+           $('button[type="submit"]').prop('disabled', true);   
+           
+           var conformpass = $('#conformpass').val();
+           if(conformpass == ''){
+            $('#validatestatus').html('Please Match Your Password').css('color', 'red');
+            return false;
+           }
+          var $form = $(e.target);
+            $.ajax({
+                type: 'POST',
+                url: '<?php echo $this->url(array('module'=>'default', 'controller' => 'employeedetails', 'action' => 'save'));?>',
+                data: $form.serialize(),
+                success: function(response){
+                  var obj = $.parseJSON(response);
+                  $('button[type="submit"]').prop('disabled', false);
+                  if (obj.result) {
+                    if(obj.result == "Records has been Inserted Successfully !!"){
+                      // $('#bd-example-modal-lg').hide();
+                      if (confirm(obj.result)) {
+                        window.location.reload();
+                        } else {
+                          window.location.reload();
+                        }                    
+                  }else{
+                    alert(obj.result);
+                    return false;
+                  }                 
+                      
+                  }
+                  
+                }
+            });
+        });
+
+        $('#editForm').on('submit', function (e) {
+            // Save the form data via an Ajax request
+          e.preventDefault();
+           $('button[type="submit"]').prop('disabled', true);   
+           var conformpass = $('#editconformpass').val();
+           if(conformpass == ''){
+            $('#editvalidatestatus').html('Please Match Your Password').css('color', 'red');
+            return false;
+           }
+          var $form = $(e.target);
+            $.ajax({
+                type: 'POST',
+                url: '<?php echo $this->url(array('module'=>'default', 'controller' => 'employeedetails', 'action' => 'submiteditedform'));?>',
+                data: $form.serialize(),
+                success: function(response){
+                  var obj = $.parseJSON(response);
+                  $('button[type="submit"]').prop('disabled', false);
+                  if (obj.result) {
+                    if(obj.result == "Records has been Updated Successfully !!"){
+                      // $('#bd-example-modal-lg').hide();
+                      if (confirm(obj.result)) {
+                        window.location.reload();
+                        } else {
+                          window.location.reload();
+                        }                    
+                  }else{
+                    alert(obj.result);
+                    return false;
+                  }                 
+                      
+                  }
+                  
+                }
+            });
+        });
+
+        $('#accessbtn1').on('click', function(){
+          $('#getaccesscard').show();
+          $('#editForm').show();
+        })
+        $('#editcencel').on('click', function(){
+          $('#getaccesscard').hide();
+          $('#editForm').hide();
+        })
+        
+      
+
+      })
+
+</script>
+

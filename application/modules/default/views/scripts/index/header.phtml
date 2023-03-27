@@ -1,0 +1,72 @@
+<?php echo $this->doctype('XHTML1_TRANSITIONAL'); 
+?>		
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<title><?php echo $this->escape($this->title);?></title>
+<link rel="stylesheet" type="text/css" href="<?php echo $this->escape($this->path);?>css/adminstyle.css" media="all" />
+<script src="<?php echo $this->escape($this->path);?>js/jquery.min.js" type="text/JavaScript"  charset="utf-8"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+
+$('#button').click(function(){
+$(".error").hide();
+$('#Db_Un').css({'border-color':'#999999'});
+$('#Db_Pw').css({'border-color':'#999999'});
+var UName=$('#Db_Un').attr('value');
+var PWord=$('#Db_Pw').attr('value');
+if(UName=='')
+{
+$('#Db_Un').css({'border-color':'#cc0000'});
+$('#Db_Un').after('<span class="error">Blank User Name !!</span>');
+$('#Db_Un').focus();
+return false;
+}
+else if(PWord=='')
+{
+$('#Db_Pw').css({'border-color':'#cc0000'});
+$('#Db_Pw').after('<span class="error">Blank Password !!</span>');
+$('#Db_Pw').focus();
+return false;
+}
+else
+{
+return true;
+}
+});
+$('.FORbutton').click(function(){
+$(".error").hide();
+$('#forgetuser').css({'border-color':'#999999'});
+$('#forgetemail').css({'border-color':'#999999'});
+var FUser=$('#forgetuser').attr('value');
+var FEmail=$('#forgetemail').attr('value');
+
+if(FUser=='')
+{
+$('#forgetuser').css({'border-color':'#cc0000'});
+$('#forgetuser').after('<span class="error">Blank User Name !!</span>');
+$('#forgetuser').focus();
+return false;
+}
+else if(FEmail=='')
+{
+$('#forgetemail').css({'border-color':'#cc0000'});
+$('#forgetemail').after('<span class="error">Type Your Email Id !!</span>');
+$('#forgetemail').focus();
+return false;
+}
+else
+{
+return true;
+}
+});
+
+});
+
+//<?php echo $this->url(array('controller'=>'dailybatadmincontrol','action'=>'logout'));?>
+
+</script>
+</head>
+<body>
+<div class="main">

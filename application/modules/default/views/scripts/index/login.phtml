@@ -1,0 +1,65 @@
+﻿<?php
+$Session = new Zend_Session_Namespace("ZSN");
+?>
+<div id="loginmain">
+
+<div id="loginname">Log In : <?php echo $this->escape($this->title);?></div>
+
+
+<div id="loginattribute">
+<form  id="user" enctype="application/x-www-form-urlencoded" action="<?php echo $this->url(array('module'=>'default','controller'=>'Index','action'=>'login'),null,true);?>" method="post" autocomplete="off">
+<table border="0" style="border-collapse: collapse" cellspacing="0" cellpadding="3">
+		<tr>
+			<td align="right">User Name</td>
+			<td width="10" align="center">:</td>
+			<td align="left" width="200"><input type="text" class="textbox" id="Db_Un" value="<?php if(isset($Session->UName)){ echo $this->escape($Session->UName);} ?>" name="Db_Un" maxlength="100"></td>		
+		</tr>
+		<tr>
+			<td align="right">Password</td>
+			<td width="10" align="center">:</td>
+			<td align="left" width="200"><input type="password" class="textbox" id="Db_Pw" name="Db_Pw" maxlength="50"></td>
+		</tr>
+		<tr id="loginpart">
+			<td align="left" colspan="2">
+			
+			<!-- <a href="#<?php //echo $this->url(array('controller'=>'index','action'=>'forgotpass'));?>">Forgot your password?</a> -->
+			
+			</td>
+			<td align="center" width="200"><input id="button" type="submit" value="Log In" name="B1">
+			</td>
+			
+		</tr>
+		
+		<tr>
+			<td align="center" colspan="3" class="error_msg">
+			
+			</td>
+			
+		</tr>
+		
+		
+		
+		</form>
+	</table> 
+	
+	<div id="error_message">
+		<?php
+			if (isset($Session->ErrorMessage))
+			{
+			echo $Session->ErrorMessage;
+			UNSET($Session->ErrorMessage);
+			}
+			?>
+		</div>
+	
+<script type="text/javascript">
+$('#Db_Un').focus();
+</script>
+</div><!-- loginattribute -->
+<div id="loginbottom"><?php echo $this->escape($this->CompanyName);?></div>
+
+</div><!--loginmain-->
+
+<?php
+require_once "footer.phtml";
+?>

@@ -1,0 +1,156 @@
+<!-- Add Employee Form Model -->
+ <div class="modal fade" id="bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="card mb-4">
+            <!-- Card header -->
+          <div class="card-header">
+              <h2 class="mb-0"> Employee Attandance Form</h2>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div><!-- Card header -->
+            
+            <!-- Card body -->
+          <div class="card-body">
+              <!-- Add Employee Form groups used in grid -->
+            <form id="Form" class="needs-validation" >
+
+              <div class="form-row">
+                                                               
+                <div class="col-md-6 mb-6">
+                  <label class="form-control-label" for="exampleDatepicker">Date</label>
+                  <input class="form-control datepicker" name="date" id="todaydate" type="text" value="<?php echo date("m/d/Y") ?>">
+                </div>
+                
+                <div class="col-md-6 mb-6">
+                  <label class="form-control-label" for="present">  Mark As Attandance </label>
+                    <select class="form-control chzn-select" name="attandance" id="present" required>
+                      <option >Select Employee </option>
+                      <option selected value="All"> All </option> 
+                      <?php  foreach ($this->employee as $res) { ?>
+                      <option value="<?php echo $res['emp_id'] ;?>" ><?php echo strtoupper($res['emp_id']) ;?></option>                            
+                      <?php } ?>                          
+                    </select>
+                </div>
+
+                <div class="col-md-12 mb-12" id="attandancetable">
+                  <table class="table table-flush all_attendance" id="datatable-buttons">
+                    <tr>
+                      <th>Emp-Id</th>
+                      <th>Present</th>
+                      <th>Absent</th>
+                      <th>Leave</th>
+                      <th>Half Day</th>
+                     
+                    </tr>
+                    <?php  foreach ($this->employee as $i=>$res1) { ?>
+                    <tr>
+
+                    <td><input class="form-control" name="empid" id="empid" type="text" value="<?php echo $res1['emp_id']; ?>" style="border: hidden;"></td>
+                      <td><input class="form-check-input" type="radio" name="attandance<?php echo $i+1;?>" id="present<?php echo $i+1;?>" value ="P" checked></td>
+                      <td><input class="form-check-input" type="radio" name="attandance<?php echo $i+1;?>" id="absent<?php echo $i+1;?>" value ="A" ></td>
+                      <td><input class="form-check-input" type="radio" name="attandance<?php echo $i+1;?>" id="half<?php echo $i+1;?>" value ="H" ></td>
+                      <td><input class="form-check-input" type="radio" name="attandance<?php echo $i+1;?>" id="leave<?php echo $i+1;?>" value ="L" ></td>
+                     
+
+                    </tr>
+                    <?php } ?>
+                  </table>
+                </div>
+
+
+               
+              </div>
+
+              <button class="btn btn-primary" type="submit">Submit form</button><!-- Submit Button -->
+            </form>
+              <!-- Add Employee Form groups used in grid -->
+          </div><!-- Card body -->
+        </div>
+      </div>
+    </div>
+  </div>
+    <!-- Add Employee Form Model -->
+
+
+    
+<!-- Main content -->
+<div class="main-content" id="panel">
+ 
+  <!-- Header -->
+  <div class="header header-dark bg-primary pb-6 content__title content__title--calendar">
+    <div class="container-fluid">
+      <div class="header-body">
+        <div class="row align-items-center py-4">
+          <div class="col-lg-6">
+            <h6 class="fullcalendar-title h2 text-white d-inline-block mb-0">Full calendar</h6>
+            <nav aria-label="breadcrumb" class="d-none d-lg-inline-block ml-lg-4">
+              <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
+                <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Calendar</li>
+              </ol>
+            </nav>
+          </div>
+          <div class="col-lg-6 mt-3 mt-lg-0 text-lg-right">
+              <button type="button" class="btn btn-sm btn-neutral" data-toggle="modal" data-target="#bd-example-modal-lg">Add Attendance</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Page content -->
+ 
+</div>
+
+
+<!-- <script src="./assets/js/argon.js?v=1.1.0"></script> -->
+<!-- <script src="./assets/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+<script src="./assets/js/argon.js?v=1.1.0"></script> -->
+<!-- Demo JS - remove this in your project -->
+
+<script>
+ $(document).ready(function () {    
+  // Add chosen class to select boxes.
+      $('.chzn-select').chosen();
+          // End add chosen class to select boxes.
+      var Datepicker = (function() {
+      var $datepicker = $('.datepicker');
+      function init($this) {
+        var options = {
+          disableTouchKeyboard: true,
+          autoclose: false
+        };
+        $this.datepicker(options);
+      }
+      if ($datepicker.length) {
+        $datepicker.each(function() {
+          init($(this));
+        });
+      }
+
+      })();
+
+      $('#present').on('change', function(e){
+        var attandance = $(this).val();
+        $(".all_attendance").empty();
+        $.ajax({
+            type: 'POST',
+            url: '<?php echo $this->url(array('module'=>'default', 'controller' => 'attendance', 'action' => 'selectemp'));?>',
+            data: {'emp_id' : attandance},
+            success: function(response){
+              var obj = $.parseJSON(response); 
+
+              $("#attandancetable").html(obj.data);
+              
+             
+            }
+        });
+      })
+
+
+
+ })
+
+</script>

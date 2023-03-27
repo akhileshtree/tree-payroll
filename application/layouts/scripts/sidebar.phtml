@@ -1,0 +1,82 @@
+<nav class="sidenav navbar navbar-vertical fixed-left navbar-expand-xs navbar-light bg-white" id="sidenav-main">
+    <div class="scrollbar-inner">
+      <!-- Brand -->
+      <div class="sidenav-header d-flex align-items-center">
+        <a class="navbar-brand" href="<?= $this->url(array('module' => 'default', 'controller' => 'dashbord'), null, true); ?>">
+          <img src="<?=$this->baseUrl();?>/images/cImage/<?= $this->login_user['photo']; ?>" class="navbar-brand-img" alt="...">
+        </a>
+        <div class="ml-auto">
+          <!-- Sidenav toggler -->
+          <div class="sidenav-toggler d-none d-xl-block active" data-action="sidenav-pin" data-target="#sidenav-main">
+            <div class="sidenav-toggler-inner">
+              <i class="sidenav-toggler-line"></i>
+              <i class="sidenav-toggler-line"></i>
+              <i class="sidenav-toggler-line"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="navbar-inner">
+          <!-- ----query for side-bar feilds for user ------- -->
+            <?php $db = Zend_Db_Table::getDefaultAdapter();
+                $Session = new Zend_Session_Namespace("ZSN");
+                $id = (int)$Session->cID;                
+                $role = $Session->role;            
+                $district = (int)$Session->district;                 
+            ?>
+        <!-- Collapse -->
+        <div class="collapse navbar-collapse" id="sidenav-collapse-main">
+          <!-- Nav items -->
+          <ul class="navbar-nav">                                 
+            <li class="nav-item">
+              <a class="nav-link active" href="<?= $this->url(array('module' => 'default', 'controller' => 'dashbord'), null, true); ?>" >
+                <i class="ni ni-shop text-primary"></i>
+                <span class="nav-link-text">Dashboard</span>
+              </a>
+            </li>
+              <?php 
+                  $sql_menu = $db->select()->from('tbl_register')->where('Sno=?', $id);
+                  $outp = $db->fetchRow($sql_menu);
+                  $sidebarid = explode(',',$outp['sideBar']) ;
+                  foreach ($sidebarid as $key => $value) {  
+                      $sql1 = $db->select()->from('tbl_sidebar')->where('sidebar_id=?',$value)->where('status=0'); 
+                      $x = $db->fetchRow($sql1) ;
+                      if($x['category'] == 1){?>
+
+                  <li class="nav-item">
+                    <a class="nav-link" href="<?= $this->url(array('module' => 'default', 'controller' => $x['sidebar_controller']), null, true); ?>">
+                      <i class="ni ni-single-02 text-green"></i>
+                      <span class="nav-link-text"><?php echo $x['sidebar_name'] ?></span>
+                    </a>
+                  </li>
+                  <?php } } ?>
+
+              <li class="nav-item">
+                <a class="nav-link" >
+                  <i class="ni ni-settings text-info"></i>
+                  <span class="nav-link-text">Setting</span>
+                </a>
+                <ul class="nav nav-sm flex-column">
+                    <?php 
+                      $sql_menu = $db->select()->from('tbl_register')->where('Sno=?', $id)->where('status=0');
+                      $outp = $db->fetchRow($sql_menu);
+                      $sidebarid = explode(',',$outp['sideBar']) ;
+                      foreach ($sidebarid as $key => $value) {  
+                          $sql1 = $db->select()->from('tbl_sidebar')->where('sidebar_id=?',$value)->where('status=0'); 
+                          $x = $db->fetchRow($sql1) ;
+                      if($x['category'] == 0) { 
+                    ?> 
+
+                  <li class="nav-item">
+                    <a href="<?= $this->url(array('module' => 'default', 'controller' => $x['sidebar_controller']), null, true); ?>" class="nav-link"><?php echo $x['sidebar_name'] ?></a>
+                  </li> 
+                  <?php } } ?>  
+                </ul>
+              </li>
+          </ul>
+          <!-- Divider -->
+        </div>
+      </div>
+    </div>
+</nav>
+
