@@ -49,7 +49,10 @@ class Default_DashbordController extends Zend_Controller_Action
     {
         $db = Zend_Db_Table::getDefaultAdapter();
         $Session = new Zend_Session_Namespace("ZSN");
-        $id = (int)$Session->cID; 		
+        $id = (int)$Session->cID; 
+        $checkquery = $db->select()->from("tbl_employee", array("num"=>"COUNT(*)"));
+        $checkrequest = $db->fetchRow($checkquery);
+        $this->view->user = $checkrequest["num"];		
     } //END index
 
     public function notificationAction()

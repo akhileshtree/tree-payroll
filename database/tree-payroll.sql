@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 27, 2023 at 06:20 AM
--- Server version: 10.4.24-MariaDB
--- PHP Version: 7.4.29
+-- Generation Time: Apr 20, 2023 at 01:53 PM
+-- Server version: 10.4.27-MariaDB
+-- PHP Version: 7.4.33
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -55,7 +55,7 @@ CREATE TABLE `tbl_adminuser` (
   `Status` int(11) NOT NULL,
   `Crdate` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `LastLogin` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `tbl_adminuser`
@@ -68,6 +68,21 @@ INSERT INTO `tbl_adminuser` (`Sno`, `Name`, `Mobile`, `EMail`, `UserName`, `Pass
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tbl_attendance`
+--
+
+CREATE TABLE `tbl_attendance` (
+  `id` int(11) NOT NULL,
+  `emp_id` int(11) NOT NULL,
+  `attendance_status` varchar(20) DEFAULT NULL,
+  `attendance_date` datetime NOT NULL,
+  `createdAt` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updatedAt` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tbl_department`
 --
 
@@ -76,7 +91,7 @@ CREATE TABLE `tbl_department` (
   `department_name` varchar(100) NOT NULL,
   `note` varchar(255) DEFAULT 'N/A',
   `status` int(11) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `tbl_department`
@@ -129,7 +144,7 @@ CREATE TABLE `tbl_employee` (
   `emp_image` varchar(50) NOT NULL,
   `emp_status` varchar(20) NOT NULL DEFAULT 'active',
   `date` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `tbl_employee`
@@ -164,14 +179,14 @@ CREATE TABLE `tbl_register` (
   `photo` varchar(100) NOT NULL,
   `Role` varchar(255) NOT NULL,
   `status` int(11) NOT NULL DEFAULT 0
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `tbl_register`
 --
 
 INSERT INTO `tbl_register` (`Sno`, `companyName`, `department_type_id`, `UserName`, `Name`, `Password`, `passStatus`, `sesion_id`, `Address`, `c_person`, `mobileNo`, `emailId`, `website`, `Remarks`, `sideBar`, `photo`, `Role`, `status`) VALUES
-(1, 'Tree Multisoft services', 0, 'admin', 'TREE MULTISOFT', '202cb962ac59075b964b07152d234b70', 0, '6oaf2v7pn7tedeb6rfposqbt2h', '10-B Mothorowala Road, Near Rawat Wedding Point and opp. PNB Bank, Ajabpur Kalan Dehradun,248001, Uttarakhand, India', '', '5555897896', 'infotech@treemultisoft.com', 'www.treemultisoft.com', '', '1,2,3,4,5', '20220830070344.jpg', 'admin', 0),
+(1, 'Tree Multisoft services', 0, 'admin', 'TREE MULTISOFT', '202cb962ac59075b964b07152d234b70', 0, '61unf7iisiftisppnsfvkt7agb', '10-B Mothorowala Road, Near Rawat Wedding Point and opp. PNB Bank, Ajabpur Kalan Dehradun,248001, Uttarakhand, India', '', '5555897896', 'infotech@treemultisoft.com', 'www.treemultisoft.com', '', '1,2,3,4,5', '20220830070344.jpg', 'admin', 0),
 (78, 'Tree Multisoft services', 0, 'abijalwan3@gmail.com', 'TREE1006', '202cb962ac59075b964b07152d234b70', 0, 'gn8r9aualvcj6jjhh12p0fke06', 'Dehradun', '', '7579124918', 'abijalwan3@gmail.com', '', '', '', '20220830071737.jpg', 'user', 0),
 (79, 'Tree Multisoft services', 0, 'gbijalwan5@gmail.com', 'TREE1007', '202cb962ac59075b964b07152d234b70', 0, '', 'Dehradun', '', '7456034448', 'gbijalwan5@gmail.com', '', '', '', '20220830022016.jpg', 'user', 1),
 (80, 'Tree Multisoft services', 0, 'aman123@gmail.com', 'TREE1003', '21232f297a57a5a743894a0e4a801fc3', 0, 'vsl5o73tg98c9ajs11h5kgvu65', 'The Mall Road Mussoorie Uttarakhand  ', '', '7654321890', 'aman123@gmail.com', '', '', '', '20220818105330.jpg', 'user', 0);
@@ -188,7 +203,7 @@ CREATE TABLE `tbl_services` (
   `note` varchar(255) NOT NULL,
   `status` int(1) NOT NULL,
   `crDate` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `tbl_services`
@@ -219,7 +234,7 @@ CREATE TABLE `tbl_sessionmanagement` (
   `LoginType` varchar(10) NOT NULL,
   `RandId` varchar(100) NOT NULL,
   `CrDate` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `tbl_sessionmanagement`
@@ -656,7 +671,8 @@ INSERT INTO `tbl_sessionmanagement` (`Sno`, `UserId`, `UserType`, `IpAddress`, `
 (0, 1, 'Tree Multisoft ', '::1', '', '2022-10-27 11:32:32', '2022-10-27 11:32:34', 'SuperAdmin', '1229', '2022-10-27 06:02:34'),
 (0, 1, 'Tree Multisoft ', '::1', '', '2022-12-21 16:48:24', '2022-12-21 16:48:25', 'SuperAdmin', '22476', '2022-12-21 11:18:25'),
 (0, 1, 'Tree Multisoft ', '::1', '', '2023-03-24 13:42:45', '2023-03-24 13:43:05', 'SuperAdmin', '1887390037', '2023-03-24 08:13:05'),
-(0, 1, 'Tree Multisoft ', '::1', '', '2023-03-27 09:44:27', '2023-03-27 09:48:33', 'SuperAdmin', '916118523', '2023-03-27 04:18:33');
+(0, 1, 'Tree Multisoft ', '::1', '', '2023-03-27 09:44:27', '2023-03-27 09:48:33', 'SuperAdmin', '916118523', '2023-03-27 04:18:33'),
+(0, 1, 'Tree Multisoft ', '::1', '', '2023-04-20 17:02:39', '2023-04-20 17:23:22', 'SuperAdmin', '668064979', '2023-04-20 11:53:22');
 
 -- --------------------------------------------------------
 
@@ -671,7 +687,7 @@ CREATE TABLE `tbl_sidebar` (
   `sidebar_name` varchar(255) NOT NULL,
   `status` int(2) NOT NULL DEFAULT 0,
   `create_date` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `tbl_sidebar`
@@ -720,7 +736,7 @@ CREATE TABLE `tbl_temp_employe` (
   `emp_image` varchar(50) NOT NULL,
   `emp_status` varchar(20) NOT NULL DEFAULT 'left',
   `date` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `tbl_temp_employe`
